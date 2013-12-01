@@ -1,0 +1,30 @@
+[Desktop Entry]
+Name=Nautilus
+Comment=Access and organize files
+Exec=nautilus %U
+Icon=system-file-manager
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Utility;Core;
+MimeType=inode/directory;application/x-gnome-saved-search;
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=nautilus
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=3.2.0
+X-Ubuntu-Gettext-Domain=nautilus
+
+
+X-Ayatana-Desktop-Shortcuts=Root;U1
+
+[Root Shortcut Group]
+Name=Filesystem Root
+Exec=nautilus /
+TargetEnvironment=Unity
+
+[U1 Shortcut Group]
+Name=Ubuntu One
+Exec=nautilus "Ubuntu One"
+TargetEnvironment=Unity
+
+

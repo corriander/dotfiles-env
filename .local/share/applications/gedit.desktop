@@ -1,0 +1,52 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Icon=accessories-text-editor
+Type=Application
+Categories=Office;GNOME;GTK;Utility;TextEditor;
+Exec=gedit %U
+MimeType=text/plain;
+Name=gedit
+GenericName=Text Editor
+Comment=Create documents
+StartupNotify=true
+X-Ayatana-Desktop-Shortcuts=Note;Text;Writer;Calc;Draw;Impress
+
+[Note Shortcut Group]
+Name=New note
+Exec=tomboy --nre-note
+TargetEnvironment=Unity
+
+[Text Shortcut Group]
+Name=New text file
+Exec=gedit --new-document
+TargetEnvironment=Unity
+
+[Writer Shortcut Group]
+Name=New document
+Exec=libreoffice --writer %U
+TargetEnvironment=Unity
+
+[Calc Shortcut Group]
+Name=New spreadsheet
+Exec=libreoffice --calc %U
+TargetEnvironment=Unity
+
+[Draw Shortcut Group]
+Name=New drawing
+Exec=libreoffice --draw %U
+TargetEnvironment=Unity
+
+[Impress Shortcut Group]
+Name=New presentation
+Exec=libreoffice --impress %U
+TargetEnvironment=Unity
+
+X-GNOME-DocPath=gedit/gedit.xml
+X-GNOME-FullName=Text Editor
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=gedit
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=3.2.3
+X-GNOME-Bugzilla-ExtraInfoScript=/usr/share/gedit/gedit-bugreport
+X-Ubuntu-Gettext-Domain=gedit

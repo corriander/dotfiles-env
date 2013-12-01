@@ -1,0 +1,51 @@
+[Desktop Entry]
+Name=Terminal
+Comment=Use the command line
+TryExec=gnome-terminal
+Exec=gnome-terminal
+Icon=utilities-terminal
+Type=Application
+X-GNOME-DocPath=gnome-terminal/index.html
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=gnome-terminal
+X-GNOME-Bugzilla-Component=BugBuddyBugs
+X-GNOME-Bugzilla-Version=3.0.1
+Categories=GNOME;GTK;Utility;TerminalEmulator;
+StartupNotify=true
+X-Ayatana-Desktop-Shortcuts=New;Root;Server1;Server2;ScriptManager;REBOOT_(W7);telnet_ST780WL
+X-Ubuntu-Gettext-Domain=gnome-terminal
+
+[New Shortcut Group]
+Name=New Terminal
+Exec=gnome-terminal
+TargetEnvironment=Unity
+
+[Root Shortcut Group]
+Name=Root Terminal
+Exec=gksu gnome-terminal
+TargetEnvironment=Unity
+
+[Server1 Shortcut Group]
+Name=[SSH] alex@Z570
+Exec=gnome-terminal --disable-factory --sm-client-disable  --class=remoteserver -x ssh -t z570
+TargetEnvironment=Unity
+
+[Server2 Shortcut Group]
+Name=[SSH] ajc502@BRAVA
+Exec=gnome-terminal --disable-factory --sm-client-disable  --class=remoteserver -x ssh -t BRAVA
+TargetEnvironment=Unity
+
+[ScriptManager Shortcut Group]
+Name=((( Script Manager )))
+Exec=/home/alex/.scripts/scriptmanager
+TargetEnvironment=Unity
+
+[REBOOT_(W7) Shortcut Group]
+Name=W7 Laptop Reboot
+Exec=winreboot
+TargetEnvironment=Unity
+
+[telnet_ST780WL Shortcut Group]
+Name=[telnet] O2 Wireless Box
+Exec=gnome-terminal --command="/home/alex/.scripts/telnet_ST780WL" --title="[telnet] O2 Wireless Box"
+TargetEnvironment=Unity

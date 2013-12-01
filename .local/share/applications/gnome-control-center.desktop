@@ -1,0 +1,61 @@
+[Desktop Entry]
+Name=System Settings
+Icon=preferences-system
+Exec=gnome-control-center --overview
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;System;
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=gnome-control-center
+X-GNOME-Bugzilla-Component=shell
+X-GNOME-Bugzilla-Version=3.2.0
+X-Ubuntu-Gettext-Domain=gnome-control-center-2.0
+
+StartupNotify=true
+X-Ayatana-Desktop-Shortcuts=Update;Software;Synaptic;U1;Gconf;Dconf;Compiz;Info;Sysmon
+
+[Update Shortcut Group]
+Name=Update Manager
+Exec=update-manager
+TargetEnvironment=Unity
+
+[Software Shortcut Group]
+Name=Software Center
+Exec=software-center
+TargetEnvironment=Unity
+
+[Synaptic Shortcut Group]
+Name=Synaptic
+Exec=gksu synaptic
+TargetEnvironment=Unity
+
+[U1 Shortcut Group]
+Name=Ubuntu One
+Exec=ubuntuone-control-panel-gtk
+TargetEnvironment=Unity
+
+[Gconf Shortcut Group]
+Name=Gnome Config
+Exec=gconf-editor
+TargetEnvironment=Unity
+
+[Dconf Shortcut Group]
+Name=Desktop Config
+Exec=dconf-editor
+TargetEnvironment=Unity
+
+[Compiz Shortcut Group]
+Name=Compiz Config
+Exec=ccsm
+TargetEnvironment=Unity
+
+[Info Shortcut Group]
+Name=Ubuntu Tweak
+Exec=ubuntu-tweak
+TargetEnvironment=Unity
+
+[Sysmon Shortcut Group]
+Name=System Monitor
+Exec=gnome-system-monitor
+TargetEnvironment=Unity
