@@ -1,5 +1,7 @@
-env-config
-==========
+dotfiles-env
+============
+
+My environment-related configuration / dotfiles
 
 This is a [`vcsh`][vcsh]-managed repository for my environment-related
 dotfiles. I follow a *grouped* software schema for my dotfiles rather
