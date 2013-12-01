@@ -1,0 +1,11 @@
+*
+!.abcde.conf
+!.gitconfig
+!.gitignore
+!.local
+!.local/share
+!.local/share/vcsh
+!.local/share/vcsh/doc
+!.local/share/vcsh/doc/env
+!.local/share/vcsh/doc/env/LICENSE
+!.local/share/vcsh/doc/env/README.md
