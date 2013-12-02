@@ -1,21 +1,21 @@
 [include]
-	path = ~/.gitidentity
+    path = ~/.private/gitidentity
 
 [core]
-	autocrlf = input
-	safecrlf = true
-	excludesfile = ~/.gitignore
+    autocrlf = input
+    safecrlf = true
+    excludesfile = ~/.gitignore
 [alias]
-	go = checkout
-	ci = commit
-	st = status
-	br = branch
-	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-	type = cat-file -t
-	dump = cat-file -p
-	rewind-commit = reset --soft HEAD~1
-	rewind-index = reset --mixed HEAD~1
-	rewind-files = reset --hard HEAD~1
+    go = checkout
+    ci = commit
+    st = status
+    br = branch
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    type = cat-file -t
+    dump = cat-file -p
+    rewind-commit = reset --soft HEAD~1
+    rewind-index = reset --mixed HEAD~1
+    rewind-files = reset --hard HEAD~1
 [filter "tabspace"]
-	smudge = unexpand --tabs=4 --first-only
-	clean = expand --tabs=4 --initial
+    smudge = unexpand --tabs=4 --first-only
+    clean = expand --tabs=4 --initial
