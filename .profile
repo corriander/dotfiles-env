@@ -25,12 +25,12 @@ fi
 ######################### USER MODIFICATIONS #########################
 ######################################################################
 
-# set PATH so it includes user's private bin if it exists
+# I keep my executables in `~/.bin`
 if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
-# set PATH so it includes user's scripts (.scripts) folder if exists
+# I keep my scripts in `~/.scripts` 
 if [ -d "$HOME/.scripts" ] ; then
     PATH="$HOME/.scripts:$PATH"
 fi
