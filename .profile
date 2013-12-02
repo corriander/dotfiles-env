@@ -25,6 +25,24 @@ fi
 ######################### USER MODIFICATIONS #########################
 ######################################################################
 
+# First, a function to simplify the repetitive adding-to-PATH
+# Credit: http://superuser.com/a/39995 (more robust than I would have
+# done)
+#
+# TODO: I'm currently adding to the start of PATH to allow overriding
+# executables. There's a security consideration here in that malicious
+# code could override common utilities *but* surely there's multiple
+# vectors for this, so I'm currently uncertain whether it's worth the
+# inconvenience.
+# -- <http://unix.stackexchange.com/a/26048>
+
+add_to_path () {
+	# Checks arg is an extant directory and isn't already in PATH	
+	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+		PATH="$1${PATH:+":$PATH"}"	# See "shell parameter expansion"
+	fi
+}
+
 # I keep my executables in `~/.bin`
 if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
