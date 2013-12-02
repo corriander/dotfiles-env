@@ -12,7 +12,7 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+    . "$HOME/.bashrc"
     fi
 fi
 
@@ -45,16 +45,17 @@ fi
 # -- <http://unix.stackexchange.com/a/26048>
 
 add_to_path () {
-	# Checks arg is an extant directory and isn't already in PATH	
-	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-		PATH="$1${PATH:+":$PATH"}"	# See "shell parameter expansion"
-	fi
+    # Checks arg is an extant directory and isn't already in PATH	
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1${PATH:+":$PATH"}"	# See "shell parameter expansion"
+    fi
 }
 
 add_to_path ${HOME}/.bin						# my bin 
 add_to_path ${HOME}/.local/bin					# bin overrides
 add_to_path ${HOME}/.scripts					# scripts
 add_to_path ${HOME}/.private/scripts			# sensitive scripts
+add_to_path ${HOME}/.scripts/3rd-party			# 3rd party scripts
 add_to_path /opt/latex/current/bin/x86_64-linux	# TexLive binaries
 
 # ------------------------------------------------------------------ 
