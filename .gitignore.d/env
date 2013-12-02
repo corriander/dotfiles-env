@@ -2,6 +2,8 @@
 !.abcde.conf
 !.gitconfig
 !.gitignore
+!.gitignore.d
+!.gitignore.d/env
 !.local
 !.local/share
 !.local/share/vcsh
@@ -9,3 +11,9 @@
 !.local/share/vcsh/doc/env
 !.local/share/vcsh/doc/env/LICENSE
 !.local/share/vcsh/doc/env/README.md
+!.scripts/
+!.scripts/*
+!.scripts/README.md
+!.scripts/3rd-party/
+!.scripts/3rd-party/*
+!.scripts/3rd-party/README.md
