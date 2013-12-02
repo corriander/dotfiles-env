@@ -12,6 +12,8 @@ alias mvi='mv -iv'
 alias rmi='rm -i'
 alias cpi='cp -iv'
 
+alias lsd='ls -d */'
+
 # Navigation
 
 alias cd_docs='cd ~/Documents'
