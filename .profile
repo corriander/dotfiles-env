@@ -21,9 +21,17 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-######################################################################
-######################### USER MODIFICATIONS #########################
-######################################################################
+# ------------------------------------------------------------------
+# ------------------------------------------------------------------
+#
+#                        USER MODIFICATIONS
+#
+# ------------------------------------------------------------------
+# ------------------------------------------------------------------
+#
+#	PATH settings
+#
+# ------------------------------------------------------------------
 
 # First, a function to simplify the repetitive adding-to-PATH
 # Credit: http://superuser.com/a/39995 (more robust than I would have
@@ -43,15 +51,17 @@ add_to_path () {
 	fi
 }
 
-# I keep my executables in `~/.bin`
-if [ -d "$HOME/.bin" ] ; then
-    PATH="$HOME/.bin:$PATH"
-fi
+add_to_path ${HOME}/.bin						# my bin 
+add_to_path ${HOME}/.local/bin					# bin overrides
+add_to_path ${HOME}/.scripts					# scripts
+add_to_path ${HOME}/.private/scripts			# sensitive scripts
+add_to_path /opt/latex/current/bin/x86_64-linux	# TexLive binaries
 
-# I keep my scripts in `~/.scripts` 
-if [ -d "$HOME/.scripts" ] ; then
-    PATH="$HOME/.scripts:$PATH"
-fi
+# ------------------------------------------------------------------ 
+#
+#	Non-PATH environment variables
+#
+# ------------------------------------------------------------------
 
 # set LaTeX paths for TeXLive installation
 path="/opt/latex/current/texmf/doc/info"
@@ -64,16 +74,15 @@ if [ -d "$path" ] ; then
     MANPATH="$path:$MANPATH"
 fi
 
-path="/opt/latex/current/bin/x86_64-linux"
-if [ -d "$path" ] ; then
-    PATH="$path:$PATH"
-fi
+# Define which languages `gettext` should use / fall back on
+# http://www.gnu.org/software/gettext/manual/gettext.html#The-LANGUAGE-variable
 export LANGUAGE="en_GB:en"
+
+# Set locale
+# https://help.ubuntu.com/community/EnvironmentVariables#Locale_setting_variables
 export LC_MESSAGES="en_GB.UTF-8"
 export LC_CTYPE="en_GB.UTF-8"
 export LC_COLLATE="en_GB.UTF-8"
 
-
 # set JAVA_HOME
-
 export JAVA_HOME=/usr/lib/jvm/default-java
