@@ -7,6 +7,8 @@
 !.gitignore.d
 !.gitignore.d/env
 !.local
+!.local/bin
+!.local/bin/*
 !.local/share
 !.local/share/vcsh
 !.local/share/vcsh/doc

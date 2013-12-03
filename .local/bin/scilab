@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# executes scilab with custom graphics library (fixes plot-hang issue in oneiric)
+
+export LD_LIBRARY_PATH=~/.Scilab/lib ;
+/usr/bin/scilab

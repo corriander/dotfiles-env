@@ -1,0 +1,5 @@
+#!/bin/bash
+
+BIN="/home/alex/code/3rdparty/f.lux-indicator-applet/src/xflux"
+${BIN} -l 50.9 -g -1.4
+
