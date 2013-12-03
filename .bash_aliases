@@ -13,6 +13,7 @@ alias rmi='rm -i'
 alias cpi='cp -iv'
 
 alias lsd='ls -d */'
+alias tree_plain='tree -FanI .git --charset=IBM347'
 
 # Navigation
 
