@@ -53,8 +53,8 @@ add_to_path () {
     # Future me: see 'shell parameter expansion' in man for ${x:+$y} 
     string=:$PATH:
     substring=:$1:
-    if [ -d "$1" ] && [ ${string#*$substring} = $string ]; then
-        if [ $2 = "after" ] ; then
+    if [ -d "$1" ] && [ "${string#*$substring}" = "$string" ]; then
+        if [ "$2" = "after" ] ; then
             PATH="${PATH:+"$PATH:"}$1"
         else
             PATH="$1${PATH:+":$PATH"}"	
