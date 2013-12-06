@@ -1,1 +1,9 @@
 set editing-mode vi
+
+# Partial history search (e.g. typing ca followed by up results in
+# commands matching ca*)
+#
+# Up arrow
+"\e[A":history-search-backward
+# Down arrow
+"\e[B":history-search-forward
