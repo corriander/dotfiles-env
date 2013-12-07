@@ -1,0 +1,15 @@
+# Configure bash prompt to display
+#	- timestamp
+#	- user
+#	- host
+#	- path
+#	- git branch and status
+#
+# Makes use of environment variables specified in
+# `/etc/bash_completion.d/git`; see contents for documentation.
+
+GIT_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWUPSTREAM=true
+GIT_PS1_SHOWSTASHSTATE=true
+PS1='\[\e[1;30m\][\A]\[\e[0m\] \u@\h:\w$(__git_ps1 ":(%s)")\n\$ '
