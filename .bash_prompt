@@ -12,4 +12,4 @@ GIT_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUPSTREAM=true
 GIT_PS1_SHOWSTASHSTATE=true
-PS1='\[\e[1;30m\][\A]\[\e[0m\] \u@\h:\w$(__git_ps1 ":(%s)")\n\$ '
+PS1='\[\e[1;30m\][\A]\[\e[0m\] \[\e[1m\]\u@\h\[\e[0m\]:\w$(__git_ps1 " (%s)")\n\$ '
