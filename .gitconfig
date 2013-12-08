@@ -1,6 +1,5 @@
 [include]
     path = ~/.private/gitidentity
-
 [core]
     autocrlf = input
     safecrlf = true
@@ -16,6 +15,12 @@
     rewind-commit = reset --soft HEAD~1
     rewind-index = reset --mixed HEAD~1
     rewind-files = reset --hard HEAD~1
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = auto
 [filter "tabspace"]
     smudge = unexpand --tabs=4 --first-only
     clean = expand --tabs=4 --initial
