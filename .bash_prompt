@@ -1,15 +1,35 @@
+# ~/.bash_prompt
+#
 # Configure bash prompt to display
-#	- timestamp
-#	- user
-#	- host
-#	- path
-#	- git branch and status
+#   - timestamp
+#   - user
+#   - host
+#   - path
+#   - git branch and status
 #
 # Makes use of environment variables specified in
 # `/etc/bash_completion.d/git`; see contents for documentation.
+#
+# Source in `~/.bashrc` or `~/.bash_profile`
 
-GIT_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUPSTREAM=true
 GIT_PS1_SHOWSTASHSTATE=true
-PS1='\[\e[1;30m\][\A]\[\e[0m\] \[\e[1m\]\u@\h\[\e[0m\]:\w$(__git_ps1 " (%s)")\n\$ '
+
+_ps1_str () {
+    _bwhite='\e[1m'       # set font to bold white
+    _bblack='\e[1;30m'    # set font to bold black (it's not really..)
+    _default='\e[0m'      # set font to default
+
+    # Note the \[..\] surrounding the format codes, stops weirdness.
+    _str_date="\[${_bblack}\][\A]\[${_default}\]"
+    _str_who="\[${_bwhite}\]\u@\h\[${_default}\]"
+    _str_git='$(__git_ps1 " (%s)")'
+
+    echo ${_str_date}' '${_str_who}':\w'${_str_git}'\n\$ '
+}
+
+PS1=`_ps1_str`
+
+unset _ps1_str
