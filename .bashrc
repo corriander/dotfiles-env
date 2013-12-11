@@ -112,4 +112,5 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-. .bash_prompt
+
+. $HOME/.bash_prompt
