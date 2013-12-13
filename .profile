@@ -98,3 +98,10 @@ export LC_COLLATE="en_GB.UTF-8"
 
 # set JAVA_HOME
 export JAVA_HOME=/usr/lib/jvm/default-java
+
+# set default editor
+#
+# Note: Debian/Ubuntu the 'alternatives' mechanism provides editor
+# aliases. However, programs are supposed to read $EDITOR first which
+# is currently unset <http://superuser.com/a/168710>
+export EDITOR=/usr/bin/vim
