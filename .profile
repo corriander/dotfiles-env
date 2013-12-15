@@ -105,3 +105,6 @@ export JAVA_HOME=/usr/lib/jvm/default-java
 # aliases. However, programs are supposed to read $EDITOR first which
 # is currently unset <http://superuser.com/a/168710>
 export EDITOR=/usr/bin/vim
+
+# Special FUNCPATH for shell functions
+export FUNCPATH=$HOME/.functions
