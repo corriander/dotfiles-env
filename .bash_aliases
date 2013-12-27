@@ -35,3 +35,4 @@ alias mounted='mount | column -t'
 
 alias vim='TERM=gnome-256color vim'
 alias dua='baobab'
+alias rgrep='rgrep --color=auto'
