@@ -13,6 +13,9 @@
 !.local/bin
 !.local/bin/*
 !.local/share
+!.local/share/nautilus-python
+!.local/share/nautilus-python/extensions
+!.local/share/nautilus-python/extensions/*
 !.local/share/vcsh
 !.local/share/vcsh/doc
 !.local/share/vcsh/doc/env
