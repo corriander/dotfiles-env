@@ -6,6 +6,7 @@
     excludesfile = ~/.gitignore
 [alias]
     go = checkout
+    co = checkout
     ci = commit
     st = status
     br = branch
