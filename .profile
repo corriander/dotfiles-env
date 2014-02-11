@@ -63,7 +63,7 @@ add_to_path () {
 }
 
 add_to_path ${HOME}/.bin						# my bin 
-add_to_path ${HOME}/.local/bin					# bin overrides
+add_to_path ${HOME}/.local/bin					# bin (inc. overrides)
 add_to_path ${HOME}/.scripts					# scripts
 add_to_path ${HOME}/.private/scripts			# sensitive scripts
 add_to_path ${HOME}/.scripts/3rd-party			# 3rd party scripts
