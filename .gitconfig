@@ -26,5 +26,5 @@
     interactive = auto
     ui = auto
 [filter "tabspace"]
-    smudge = unexpand --tabs=4 --first-only
-    clean = expand --tabs=4 --initial
+#   smudge = expand --tabs=4 --first-only
+#   clean = unexpand --tabs=4 --initial
