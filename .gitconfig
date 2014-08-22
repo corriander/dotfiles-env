@@ -28,3 +28,5 @@
 [filter "tabspace"]
 #   smudge = expand --tabs=4 --first-only
 #   clean = unexpand --tabs=4 --initial
+[push]
+	default = simple
