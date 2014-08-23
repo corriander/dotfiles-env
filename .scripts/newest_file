@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Return the modification date, time and name of the newest file in a
+# directory.
+
+# Adapted from http://stackoverflow.com/a/4561987
+find ${1:-.} -type f -printf '%TY%Tm%Td-%TT %p\n' | \
+	sort -n | \
+	tail -1 | \
+	sed 's/\.0*//'

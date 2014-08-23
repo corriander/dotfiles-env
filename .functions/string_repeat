@@ -1,0 +1,8 @@
+# http://stackoverflow.com/a/5349842
+string_repeat () {
+	# Repeat a string n times
+	#
+	# $1 is the string
+	# $2 is the number of times
+	printf "$1%.0s" {1..$2}
+}

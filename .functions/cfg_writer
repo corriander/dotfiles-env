@@ -1,0 +1,20 @@
+# Function definition
+# Source -- http://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
+cfg_writer () {
+    IFS=' '$'\n'
+    fun="$(declare -F)"
+    fun="${fun//declare -f/}"
+    for f in $fun; do
+        [ "${f#cfg.section}" == "${f}" ] && continue
+        item="$(declare -f ${f})"
+        item="${item##*\{}"
+        item="${item%\}}"
+        item="${item//=*;/}"
+        vars="${item//=*/}"
+        eval $f
+        echo "[${f#cfg.section.}]"
+        for var in $vars; do
+            echo $var=\"${!var}\"
+        done
+    done
+} 

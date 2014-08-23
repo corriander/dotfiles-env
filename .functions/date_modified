@@ -1,0 +1,15 @@
+# Function definition
+date_modified () {
+	# Fetch the date of last file modification
+	# $1..n file paths
+	for f in $*
+	do
+		if [ ! -f "$f" ];
+		then
+			echo "Function: date_modified: $f is not a file"
+			continue
+		else
+			echo `date -r "$f" +'%F %T'` "$f"
+ 		fi
+	done
+}

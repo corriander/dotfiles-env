@@ -1,10 +1,7 @@
 # This bash function will check to see whether the two arguments (both
 # paths) have the same `basename`. 
-#
-# Takes two arguments, if the `basename` of both arguments is the
-# same, it returns 0, else it returns 1
-
 same_basename () {
+	# Checks whether the basename of both arguments is equal
     if [ `basename "$1"` = `basename "$2"` ] ; then
         return 0
     else

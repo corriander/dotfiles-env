@@ -1,0 +1,19 @@
+# Function definition
+abspath () {
+	# Convert relative path to absolute path
+	# $1 : relative path
+	if [ -d "$1" ]; then
+		# Relative path points to dir
+		echo "$(cd $1; pwd)"
+	elif [ -f "$1" ]; then
+		# Relative path points to file
+		if [[ $1 == */* ]]; then
+			# File in nested dir
+			echo "$(cd ${1%/*}; pwd)/${1##*/}"
+		else
+			# File in current dir
+			echo "$(pwd)/$1"
+		fi
+	fi
+}
+		 

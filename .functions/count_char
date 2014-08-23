@@ -1,0 +1,14 @@
+# Function definition
+# http://www.cyberciti.biz/faq/unix-linux-appleosx-bsd-bash-count-characters-variables/
+# Note: if grep is not suitable, this can be done in pure Bash:
+# 	x="Test string"
+# 	y="${x//[^s|S]}
+# 	echo $y
+# 	echo ${#y}
+count_char () {
+	# Count the number of characters in a string
+	#
+	# $1 is a grep regex pattern
+	# $2 is the string
+	grep -o "$1" <<<"$2" | wc -l
+}

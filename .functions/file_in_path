@@ -1,0 +1,21 @@
+file_in_path () {
+	# Checks whether the filename is in the specified `*PATH`
+	envpath=$1
+	if [ -z $envpath ] ; then
+		echo "Function: in_path: $envpath is empty."
+		exit 1
+	fi
+
+	for d in $(echo $envpath | sed 's/:/\n/g')
+	do
+		func_path="$d/$2"
+		if [ -f "$func_path" ] ; then
+			found=true
+			echo "$func_path"
+			return 0
+		fi
+	done
+
+	echo "Function: in_path: $2 not found"
+	return 1 
+}

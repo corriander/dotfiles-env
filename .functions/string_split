@@ -1,0 +1,12 @@
+# Function definition
+string_split () {
+	# Split string on a separator (default space)
+	STR=$1
+	SEP=${2:- }
+	while IFS="$SEP" read -ra arr; do
+		for i in "${arr[@]}"; do
+			echo "$i"
+		done
+	done <<< "$STR"
+}
+	
