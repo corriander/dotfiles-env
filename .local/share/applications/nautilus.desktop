@@ -14,17 +14,26 @@ X-GNOME-Bugzilla-Component=general
 X-GNOME-Bugzilla-Version=3.2.0
 X-Ubuntu-Gettext-Domain=nautilus
 
-
-X-Ayatana-Desktop-Shortcuts=Root;U1
+X-Ayatana-Desktop-Shortcuts=Root;Code;Dropbox;Multimedia
 
 [Root Shortcut Group]
-Name=Filesystem Root
+Name=/
 Exec=nautilus /
 TargetEnvironment=Unity
 
-[U1 Shortcut Group]
-Name=Ubuntu One
-Exec=nautilus "Ubuntu One"
+[Code Shortcut Group]
+Name=Code
+Exec=nautilus code
+TargetEnvironment=Unity
+
+[Dropbox Shortcut Group]
+Name=Dropbox
+Exec=nautilus Dropbox
+TargetEnvironment=Unity
+
+[Multimedia Shortcut Group]
+Name=Multimedia Drive
+Exec=nautilus /srv/multimedia
 TargetEnvironment=Unity
 
 

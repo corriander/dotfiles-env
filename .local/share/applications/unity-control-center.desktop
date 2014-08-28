@@ -1,0 +1,28 @@
+[Desktop Entry]
+Name=System Settings
+Icon=preferences-system
+Exec=unity-control-center --overview
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;System;
+OnlyShowIn=Unity;
+Keywords=Preferences;Settings;
+X-Ubuntu-Gettext-Domain=unity-control-center
+
+X-Ayatana-Desktop-Shortcuts=Update;Software;Sysmon
+
+[Update Shortcut Group]
+Name=Update Manager
+Exec=update-manager
+TargetEnvironment=Unity
+
+[Software Shortcut Group]
+Name=Software Center
+Exec=software-center
+TargetEnvironment=Unity
+
+[Sysmon Shortcut Group]
+Name=System Monitor
+Exec=gnome-system-monitor
+TargetEnvironment=Unity
