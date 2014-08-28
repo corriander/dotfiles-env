@@ -4,21 +4,17 @@ Terminal=false
 Icon=accessories-text-editor
 Type=Application
 Categories=Office;GNOME;GTK;Utility;TextEditor;
-Exec=gedit %U
+Exec=gvim %U
 MimeType=text/plain;
-Name=gedit
+Name=GVim
 GenericName=Text Editor
 Comment=Create documents
 StartupNotify=true
-X-Ayatana-Desktop-Shortcuts=Note;Text;Writer;Calc;Draw;Impress
+X-Ayatana-Desktop-Shortcuts=Gedit;Writer;Calc;Draw;Impress
 
-[Note Shortcut Group]
-Name=New note
-Exec=tomboy --nre-note
-TargetEnvironment=Unity
 
-[Text Shortcut Group]
-Name=New text file
+[Gedit Shortcut Group]
+Name=Gedit
 Exec=gedit --new-document
 TargetEnvironment=Unity
 
@@ -41,12 +37,3 @@ TargetEnvironment=Unity
 Name=New presentation
 Exec=libreoffice --impress %U
 TargetEnvironment=Unity
-
-X-GNOME-DocPath=gedit/gedit.xml
-X-GNOME-FullName=Text Editor
-X-GNOME-Bugzilla-Bugzilla=GNOME
-X-GNOME-Bugzilla-Product=gedit
-X-GNOME-Bugzilla-Component=general
-X-GNOME-Bugzilla-Version=3.2.3
-X-GNOME-Bugzilla-ExtraInfoScript=/usr/share/gedit/gedit-bugreport
-X-Ubuntu-Gettext-Domain=gedit
