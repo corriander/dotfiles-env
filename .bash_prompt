@@ -25,7 +25,13 @@ _ps1_str () {
     # Note the \[..\] surrounding the format codes, stops weirdness.
     _str_date="\[${_bblack}\][\A]\[${_default}\]"
     _str_who="\[${_bwhite}\]\u@\h\[${_default}\]"
-    _str_git='$(__git_ps1 " (%s)")'
+
+	# Using more git variants makes for ambiguous context.
+	# Add a new variable `gitx` to prefix the type of repo.
+	_str_gitx="git:"
+	_vcsh_repo=$VCSH_DIRECTORY
+	[ -z "${_vcsh_repo}" ] || _str_gitx="vcsh|${_vcsh_repo}:"
+	_str_git='$(__git_ps1 '"\" (${_str_gitx}%s)\")"
 
     echo ${_str_date}' '${_str_who}':\w'${_str_git}'\n\$ '
 }
