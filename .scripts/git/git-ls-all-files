@@ -1,0 +1,73 @@
+#!/bin/bash
+# Recursively list files in all repository branches.
+#
+# This might be a workflow issue, but I regularly find myself
+# wondering what files are in other branches and end up switching to
+# look. The following achieves this:
+#
+#     $ git ls-tree -r --full-tree --name-only <tree-ish>
+#
+# Details
+# -------
+#
+#   -r          : recurses into subdirs (rather than stopping at dir)
+# 	--name-only : flag suppresses printing object information
+#   --full-tree : implies "--full-name", and isn't limited to cwd
+#   <tree-ish>  : any kind of location git recognises, e.g. branch
+#
+# This script wraps up these arguments and accepts a valid branch as
+# the <tree-ish>. Omission defaults to all branches (ls-files works
+# just fine for the current branch! Though of course you can specify
+# the current branch or HEAD)
+#
+# References
+# ----------
+#
+# http://superuser.com/q/429693
+
+# depinfo: ~/.functions/substring, 29/08/2014
+substring () {
+	# substring(string, substring)
+	#
+	# Returns 0 if string contains substring
+	# Uses parameter substition to return 0 if pattern not removed
+	string="$1"
+	substring="$2"
+	[ "${string#*$substring}" != "${string}" ] && return 0
+	return 1
+}
+
+invalid_branch () {
+	# Exit if branch invalid
+	echo "invalid repository branch: '$branch'"
+	exit 1
+}
+
+# Get branches as a string (newline delimited)
+branches=$(git for-each-ref --format='%(refname:short)' refs/heads/)
+
+if [ "$#" = 0 ]; then
+	# We're looking at all branches. Git branch names have no
+	# whitespace ambiguities so this can be chucked in an array.
+	branch_array=( "${branches}" )
+else
+	# Arguments should all be valid branches
+	args="$@"
+	x=$'\n' # Padding to catch partial branch names
+	for branch in $args; do
+		substring "$x${branches}$x" "$x${branch}$x" || invalid_branch
+	done
+	branch_array=( "$@" )
+	branches="${args}"
+fi
+
+for branch in ${branches}; do
+	lstree=$( git ls-tree -r --full-tree --name-only $branch )
+	printf '\n'
+	[ -z "${lstree}" ] && printf "$branch: empty" || printf "$branch:"
+	printf '\n\n'
+	for path in $lstree; do
+		printf "   $path\n"
+	done
+done
+printf "\n"
