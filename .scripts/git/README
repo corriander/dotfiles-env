@@ -1,0 +1,6 @@
+Git Scripts
+===========
+
+Contains scripts relating to Git and those tools that make use of it.
+Typically these scripts may be run as aliases, or just kept here to
+distinguish them from general purpose scripts.
