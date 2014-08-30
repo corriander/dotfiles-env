@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Squash commits after specified into one. Super simple and safe.
+# http://stackoverflow.com/a/5201642
+
+git reset --soft $1
+git commit
