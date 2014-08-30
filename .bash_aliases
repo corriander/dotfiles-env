@@ -1,5 +1,7 @@
-# Package Management
+# Enable alias expansion for vim, http://stackoverflow.com/a/19819036
+shopt -s expand_aliases 
 
+# Package Management
 alias apt-install='sudo apt-get install'
 alias apt-remove='sudo apt-get remove'
 alias apt-update='sudo apt-get update'
