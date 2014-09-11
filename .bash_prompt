@@ -29,7 +29,7 @@ _ps1_str () {
 
 	# Using more git variants makes for ambiguous context.
 	# Invoke function git_type to prefix the type of repo.
-	str_git='$(__git_ps1 '"\" (\$( git_type ):%s)\")"
+	str_git='$(__git_ps1 '"\" (\$( git_type ):%s)\" | sed 's:annex/::')"
 
     echo ${str_date}' '${str_who}':\w'${str_git}'\n\$ '
 }
