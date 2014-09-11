@@ -1,0 +1,19 @@
+source ~/.functions/in_git_repo
+source ~/.functions/in_git_annex
+
+git_type () {
+	# Return a string describing the type of git repository
+	if in_git_annex
+	then
+		echo 'git-annex' && return 0
+	elif [ ! -z $VCSH_DIRECTORY ]
+	then
+		echo "vcsh|$VCSH_DIRECTORY" && return 0
+	elif in_git_repo
+	then
+		echo 'git' && return 0
+	else
+		return 1
+	fi
+}
+	
