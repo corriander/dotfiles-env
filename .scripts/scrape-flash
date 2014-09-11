@@ -1,0 +1,67 @@
+#!/bin/bash
+# Scrapes flash video from chromium browser
+#
+# Flash player deletes files after creating them. The files are still
+# open as long as the flash video is and can be retrieved via the
+# file descriptors belonging to the chromium flash player process.
+# This script identifies the correct process, looks up the relevant 
+# file descriptors and copies them to a tmp directory for manual
+# sorting. It then cleans up after itself (via manual prompt).
+#
+# NOTE: Ensure videos are fully cached
+# Update: Previous version no longer locates the file descriptors due
+# to change in flash player (now PepperFlash).
+
+# Notify user about root pass
+echo "sudo required to get at files, may be asked for password..."
+
+# -f matches against /proc/${pid}/cmdline instead of /proc/${pid}/stat
+# The correct chromium process appears to have the --type=ppapi arg
+pid=$(pgrep -f 'chromium-browser.*--type=ppapi')
+
+# Check just in case the above doesn't work some time.
+if [ -z "${pid}" ]
+then
+  echo "scrapeflv: Can't find chromium process"
+  exit 1
+fi
+
+# Get the path to the file descriptors.
+fdpath="/proc/${pid}/fd"
+
+# Create a list of file descriptors found for the Chromium pid
+lsofd=$(sudo ls -l ${fdpath} | awk '/Flash/ {print $9}')
+
+# Check we actually have some fds
+if [ -z "${lsofd}" ]
+then
+  echo "$0: No file descriptors found in /proc/${pid}/fd"
+  exit 1
+fi
+
+# Put the file descriptors in an array, we can get some progress stats
+fd_arr=( ${lsofd} )
+nfd=${#fd_arr[@]}
+
+# Create a temporary directory to shunt the files to, only keeping
+# significantly sized ones (the `-1M` may need tweaking, although this
+# step is perhaps redundant if you set chromium to ask before running
+# plugins).
+tmpdir=$(mktemp -d)
+i=0
+for fd in ${fd_arr[@]}; do
+  let i++
+  printf "${i}/${nfd} "
+  sudo cp -v ${fdpath}/${fd} ${tmpdir}/${fd}.flv
+done
+find ${tmpdir} -type f -size 1M -delete
+sudo chown $(whoami) ${tmpdir}/*  # Due to sudo cp
+
+# Manual intervention required at this point:
+read -p "Press a key to view files"
+nautilus ${tmpdir}
+
+# Prompt to tidy up
+read -p "Press a key when done saving files..."
+rm -rf ${tmpdir}
+exit 0
