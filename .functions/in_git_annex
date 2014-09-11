@@ -1,0 +1,4 @@
+in_git_annex () {
+	# Test whether inside a git-annex enabled git repository
+	git config --get annex.uuid > /dev/null && return 0 || return 1
+}

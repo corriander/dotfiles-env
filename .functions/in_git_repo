@@ -1,0 +1,4 @@
+in_git_repo () {
+	# Test whether inside a tree managed by as a git repository
+	[ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1 && return 0 || return 1
+}

@@ -11,6 +11,7 @@
 # `/etc/bash_completion.d/git`; see contents for documentation.
 #
 # Source in `~/.bashrc` or `~/.bash_profile`
+source ~/.functions/git_type
 
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWDIRTYSTATE=true
@@ -27,11 +28,8 @@ _ps1_str () {
     str_who="\[${bwhite}\]\u@\h\[${default}\]"
 
 	# Using more git variants makes for ambiguous context.
-	# Add a new variable `gitx` to prefix the type of repo.
-	str_gitx="git:"
-	vcsh_repo=$VCSH_DIRECTORY
-	[ -z "${vcsh_repo}" ] || str_gitx="vcsh|${vcsh_repo}:"
-	str_git='$(__git_ps1 '"\" (${str_gitx}%s)\")"
+	# Invoke function git_type to prefix the type of repo.
+	str_git='$(__git_ps1 '"\" (\$( git_type ):%s)\")"
 
     echo ${str_date}' '${str_who}':\w'${str_git}'\n\$ '
 }
