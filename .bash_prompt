@@ -18,22 +18,22 @@ GIT_PS1_SHOWUPSTREAM=true
 GIT_PS1_SHOWSTASHSTATE=true
 
 _ps1_str () {
-    _bwhite='\e[1m'       # set font to bold white
-    _bblack='\e[1;30m'    # set font to bold black (it's not really..)
-    _default='\e[0m'      # set font to default
+    bwhite='\e[1m'       # set font to bold white
+    bblack='\e[1;30m'    # set font to bold black (it's not really..)
+    default='\e[0m'      # set font to default
 
     # Note the \[..\] surrounding the format codes, stops weirdness.
-    _str_date="\[${_bblack}\][\A]\[${_default}\]"
-    _str_who="\[${_bwhite}\]\u@\h\[${_default}\]"
+    str_date="\[${bblack}\][\A]\[${default}\]"
+    str_who="\[${bwhite}\]\u@\h\[${default}\]"
 
 	# Using more git variants makes for ambiguous context.
 	# Add a new variable `gitx` to prefix the type of repo.
-	_str_gitx="git:"
-	_vcsh_repo=$VCSH_DIRECTORY
-	[ -z "${_vcsh_repo}" ] || _str_gitx="vcsh|${_vcsh_repo}:"
-	_str_git='$(__git_ps1 '"\" (${_str_gitx}%s)\")"
+	str_gitx="git:"
+	vcsh_repo=$VCSH_DIRECTORY
+	[ -z "${vcsh_repo}" ] || str_gitx="vcsh|${vcsh_repo}:"
+	str_git='$(__git_ps1 '"\" (${str_gitx}%s)\")"
 
-    echo ${_str_date}' '${_str_who}':\w'${_str_git}'\n\$ '
+    echo ${str_date}' '${str_who}':\w'${str_git}'\n\$ '
 }
 
 PS1=`_ps1_str`
