@@ -31,3 +31,5 @@
 #   clean = unexpand --tabs=4 --initial
 [push]
 	default = simple
+[merge]
+	tool = meld
