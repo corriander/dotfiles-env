@@ -3,6 +3,14 @@ source ~/.functions/in_git_annex
 
 git_type () {
 	# Return a string describing the type of git repository
+
+	# Hacky patch to prevent this causing a problem with /etckeeper
+	if [ "${PWD}" = "/etc" ]
+	then
+		return 1
+	fi
+
+	# ...aaand continue
 	if in_git_annex
 	then
 		echo 'git-annex' && return 0
