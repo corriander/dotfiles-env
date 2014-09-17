@@ -4,7 +4,7 @@
 # directory.
 
 # Adapted from http://stackoverflow.com/a/4561987
-find ${1:-.} -type f -printf '%TY%Tm%Td-%TT %p\n' | \
+find "${1:-.}" -type f -printf '%TY%Tm%Td-%TT %p\n' | \
 	sort -n | \
 	tail -1 | \
 	sed 's/\.0*//'
