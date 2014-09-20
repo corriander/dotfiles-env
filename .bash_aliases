@@ -35,6 +35,9 @@ alias mounted='mount | column -t'
 
 # Command replacement
 
-alias vim='TERM=gnome-256color vim'
+case $HOSTNAME in
+	$HOST_DESKTOP ) alias vim='TERM=gnome-256color vim' ;;	# Gnome, right?
+	$HOST_LAPTOP ) alias vim='TERM=xterm-256color vim' ;; # ^^ doesn't exist
+esac
 alias dua='baobab'
 alias rgrep='rgrep --color=auto'
