@@ -3,7 +3,9 @@
 [core]
     autocrlf = input
     safecrlf = true
-    excludesfile = ~/.gitignore
+	attributesfile = ~/.config/git/attributes
+    excludesfile = ~/.config/git/ignore
+	pager = less -x1,5
 [alias]
     go = checkout
     co = checkout
@@ -26,9 +28,9 @@
     branch = auto
     interactive = auto
     ui = auto
-[filter "tabspace"]
-#   smudge = expand --tabs=4 --first-only
-#   clean = unexpand --tabs=4 --initial
+[filter "pytabspace"]
+    smudge = unexpand --tabs=4 --first-only
+    clean = expand --tabs=4 --initial
 [push]
 	default = simple
 [merge]
