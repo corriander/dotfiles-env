@@ -1,0 +1,12 @@
+# Adapted from http://stackoverflow.com/a/8811800
+# See unittests
+substring () {
+	# substring(string, substring)
+	#
+	# Returns 0 if string contains substring
+	# Uses parameter substition to return 0 if pattern not removed
+	string="$1"
+	substring="$2"
+	[ "${string#*$substring}" != "${string}" ] && return 0
+	return 1
+}

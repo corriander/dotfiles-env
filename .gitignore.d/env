@@ -5,6 +5,10 @@
 !.config
 !.config/autostart
 !.config/autostart/*
+!.functions
+!.functions/*
+!.functions/unittests
+!.functions/unittests/*
 !.gitconfig
 !.gitignore
 !.gitignore.d
@@ -23,4 +27,6 @@
 !.local/share/vcsh/doc/env/README.md
 !.scripts
 !.scripts/*
+.scripts/mr*
+.scripts/vials
 !.scripts/*/
