@@ -1,0 +1,26 @@
+assert () {
+	# assert(true|false, function, args)
+	#
+	# Returns a summary of the assertion and whether it was satisfied.
+	usage="usage: assert [true|false] function args"
+	fargs_array=( "${@:3}" )
+	IFS='%'
+	fargs_string="'$( sed "s/$IFS/' '/g" <<< "${fargs_array[*]}" )'"
+	# IFS=' \t\n' # I'm not entirely sure why this breaks it, but...
+	case "$1" in
+		true ) 
+			"${@:2}" && pf='pass' || pf='fail'
+			;;
+		false ) 
+		   	"${@:2}" && pf='fail' || pf='pass'
+			;;
+		* ) 
+			echo $usage
+			return 1
+	esac
+	printf "%-40s ......%s\n" "$2 ${fargs_string}" "$pf"
+	return 0
+}
+
+# TODO: Pad the whitespace
+# http://stackoverflow.com/questions/4409399/padding-characters-in-printf
