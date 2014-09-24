@@ -41,3 +41,5 @@ case $HOSTNAME in
 esac
 alias dua='baobab'
 alias rgrep='rgrep --color=auto'
+
+alias synonym='dict -d moby-thesaurus'

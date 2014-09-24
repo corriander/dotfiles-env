@@ -1,0 +1,77 @@
+#!/bin/bash
+# Wrapper around dict, GoldenDict and web services. Provides a common
+# interface.
+
+usage () {
+cat << EOF
+USAGE: ${0##*/} [-h] [-s SERVICE] word
+Perform a word lookup.
+
+    -h          display this help and exit
+    -s SERVICE  specify a service.
+
+SERVICES
+
+    wn          WordNet 3.0 (command-line)
+    webwn       WordNet 3.1 (web API)
+    gd          GoldenDict
+    g           Google
+	syn         Moby Thesaurus II (command-line)
+	cth         Collins Thesaurus
+
+COMMENTS
+
+You can also search using dict databases directly by name:
+
+`dict -I`
+
+EOF
+}
+
+webwnurl="http://wordnetweb.princeton.edu/perl/webwn?s="
+service=wn
+OPTIND=1
+while getopts "hs:" opt; do
+	case "${opt}" in
+		h)	usage
+			exit 0
+			;;
+		s)	service=$OPTARG
+			;;
+		'?')
+			usage >&2
+			exit 1
+			;;
+	esac
+done
+shift "$((OPTIND-1))" # Shift off the options and optional --
+
+case "${service}" in
+	wn)	
+		dict -d wn $1
+		exit 0
+		;;
+	gd)
+		goldendict $1
+		exit 0
+		;;
+	webwn)
+		xdg-open ${webwnurl}${1}"&o0=1&o1=1&o2=1" 2> /dev/null 
+		exit 0
+		;;
+	g)
+		xdg-open "https://google.com/search?q=define+"${1} 2> /dev/null
+		exit 0
+		;;
+	syn)
+		dict -d moby-thesaurus $1
+		exit 0
+		;;
+	cth)
+		xdg-open "https://collinsdictionary.com/dictionary/english-thesaurus/${1}?" 2> /dev/null
+	*)
+		echo "Unrecognised service." >&2
+		usage >&2
+		exit 1
+		;;
+esac
