@@ -5,8 +5,7 @@ shopt -s expand_aliases
 alias apt-install='sudo apt-get install'
 alias apt-remove='sudo apt-get remove'
 alias apt-update='sudo apt-get update'
-alias repo-add='sudo apt-add-repository'
-alias repo-remove='sudo apt-add-repository --remove'
+alias apt-search='apt-cache search'
 
 # File / Folder Management
 
@@ -15,19 +14,20 @@ alias rmi='rm -i'
 alias cpi='cp -iv'
 
 alias lsd='ls -d */'
-alias tree_plain='tree -FanI .git --charset=IBM347'
+alias tree-plain='tree -FanI .git --charset=IBM347'
 
 # Navigation
 
-alias cd_docs='cd ~/Documents'
-alias cd_dl='cd ~/Downloads'
-alias cd_music='cd /mnt/multimedia/music'
-alias cd_audio='cd /mnt/multimedia/audio'
-alias cd_video='cd /mnt/multimedia/video'
-alias cd_multimedia='cd /mnt/multimedia'
-alias ..='..'
-alias ...='../..'
-alias ....='../../..'
+alias cdconf='cd ${XDG_CONFIG_HOME:-$HOME/.config}'
+alias cddata='cd ${XDG_DATA_HOME:-$HOME/.local/share}'
+alias cdnotes='cd ~/Notebooks'
+alias cdcode='cd ~/code'
+alias cddocs='cd ~/Documents'
+alias cddls='cd ~/Downloads'
+alias cdmusic='cd /srv/multimedia/music'
+alias cdaudio='cd /srv/multimedia/audio'
+alias cdvideo='cd /srv/multimedia/video'
+alias cdmedia='cd /srv/multimedia'
 
 # System Admin
 
