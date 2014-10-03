@@ -1,5 +1,19 @@
 #!/bin/bash
+# Runs the command-line flux application, xflux
+#
+# Dumped the xflux indicator applet as it does basically nothing. It might be
+# nice to change settings on the fly but if I need to do that then there's
+# scripts.
+#
+# Do checkout the source at github.com/Kilian/f.lux-indicator-applet for
+# additional configuration/interfacing; the command-line manual/help is, er, 
+# sparse.
+#
+# Also, they're pretty tardy but check for updates periodically yo.
 
-BIN="/home/alex/code/3rdparty/f.lux-indicator-applet/src/xflux"
-${BIN} -l 50.9 -g -1.4
+longitude=-1.4
+latitude=50.9
+colortemp=3500	# default: 3400K
+randr=1			# use randr
 
+xflux -l $latitude -g $longitude -k $colortemp -r $randr
