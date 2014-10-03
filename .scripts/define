@@ -29,7 +29,7 @@ EOF
 }
 
 webwnurl="http://wordnetweb.princeton.edu/perl/webwn?s="
-service=wn
+service=std
 OPTIND=1
 while getopts "hs:" opt; do
 	case "${opt}" in
@@ -47,8 +47,13 @@ done
 shift "$((OPTIND-1))" # Shift off the options and optional --
 
 case "${service}" in
+	std)
+		colout="colout -T $HOME/.config/colours -t dict"
+		dict $1 | align-dict-wn.sed | ${colout}
+		exit 0
+		;;
 	wn)	
-		dict -d wn $1
+		dict -d wn $1 | align-dict-wn.sed
 		exit 0
 		;;
 	gd)
@@ -69,6 +74,8 @@ case "${service}" in
 		;;
 	cth)
 		xdg-open "https://collinsdictionary.com/dictionary/english-thesaurus/${1}?" 2> /dev/null
+		exit 0
+		;;
 	*)
 		echo "Unrecognised service." >&2
 		usage >&2
