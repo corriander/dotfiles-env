@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=runflux
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_GB]=Flux
+Name=Flux
+Comment[en_GB]=Start Flux via the runflux script.
+Comment=Start Flux via the runflux script.
