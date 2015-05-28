@@ -28,7 +28,7 @@
     branch = auto
     interactive = auto
     ui = auto
-[filter "pytabspace"]
+[filter "tabspace"]
     smudge = unexpand --tabs=4 --first-only
     clean = expand --tabs=4 --initial
 [push]
