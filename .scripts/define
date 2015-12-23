@@ -49,7 +49,7 @@ shift "$((OPTIND-1))" # Shift off the options and optional --
 case "${service}" in
 	std)
 		colout="colout -T $HOME/.config/colours -t dict"
-		dict $1 | align-dict-wn.sed | ${colout}
+		dict "$@" | align-dict-wn.sed | ${colout}
 		exit 0
 		;;
 	wn)	
