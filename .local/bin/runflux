@@ -13,7 +13,7 @@
 
 longitude=-1.4
 latitude=50.9
-colortemp=3500	# default: 3400K
+colortemp=3300	# default: 3400K
 randr=1			# use randr
 
 xflux -l $latitude -g $longitude -k $colortemp -r $randr
