@@ -1,0 +1,4 @@
+# User configuration file for the DICT client.
+server orion { port 2638 }
+#server localhost
+#server dict.org
