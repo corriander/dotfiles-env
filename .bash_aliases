@@ -41,5 +41,6 @@ case $HOSTNAME in
 esac
 alias dua='baobab'
 alias rgrep='rgrep --color=auto'
-
+alias vless='vim -u /usr/share/vim/vim74/macros/less.vim'
 alias synonym='dict -d moby-thesaurus'
+alias colout='colout -T $HOME/.config/colours'
