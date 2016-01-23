@@ -135,3 +135,8 @@ export VIMINIT='let $MYVIMRC = "'${XDF_CONFIG_HOME:-~/.config}'/vim/vimrc" | sou
 
 # Special FUNCPATH for shell functions
 export FUNCPATH=$HOME/.functions
+
+# Configure python environment
+#
+# Override the location of jupyter config.
+export JUPYTER_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/jupyter
