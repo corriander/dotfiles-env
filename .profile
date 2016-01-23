@@ -121,6 +121,9 @@ export LC_COLLATE="en_GB.UTF-8"
 # set JAVA_HOME
 export JAVA_HOME=/usr/lib/jvm/default-java
 
+# set R user libraries to XDG_DATA_HOME (`current` is symlink to current ver.)
+export R_LIBS_USER=${XDG_DATA_HOME:-$HOME/.local/share/R/current/}
+
 # Configure text editor(s)
 #
 # Note: Debian/Ubuntu the 'alternatives' mechanism provides editor
