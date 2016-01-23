@@ -34,7 +34,7 @@ fi
 # ------------------------------------------------------------------
 
 # First, a function to simplify the repetitive adding-to-PATH
-# Sources: 
+# Sources:
 #	http://superuser.com/a/39995
 #	http://superuser.com/a/462982
 #	http://stackoverflow.com/a/8811800/2921610
@@ -49,20 +49,20 @@ fi
 # TODO: http://pastebin.com/xS9sgQsX contains some nice ideas
 
 add_to_path () {
-    # Checks arg is an extant directory and isn't already in PATH	
-    # Future me: see 'shell parameter expansion' in man for ${x:+$y} 
+    # Checks arg is an extant directory and isn't already in PATH
+    # Future me: see 'shell parameter expansion' in man for ${x:+$y}
     string=:$PATH:
     substring=:$1:
     if [ -d "$1" ] && [ "${string#*$substring}" = "$string" ]; then
         if [ "$2" = "after" ] ; then
             PATH="${PATH:+"$PATH:"}$1"
         else
-            PATH="$1${PATH:+":$PATH"}"	
+            PATH="$1${PATH:+":$PATH"}"
         fi
     fi
 }
 
-add_to_path ${HOME}/.bin						# my bin 
+add_to_path ${HOME}/.bin						# my bin
 add_to_path ${HOME}/.local/bin					# bin (inc. overrides)
 add_to_path ${HOME}/.scripts					# scripts
 add_to_path ${HOME}/.scripts/git				# git-related scripts
@@ -71,11 +71,31 @@ add_to_path ${HOME}/.scripts/3rd-party			# 3rd party scripts
 add_to_path /opt/latex/current/bin/x86_64-linux	# TexLive binaries
 add_to_path /opt/miniconda3/bin					# Miniconda install.
 
-# ------------------------------------------------------------------ 
+# ------------------------------------------------------------------
 #
 #	Non-PATH environment variables`
 #
 # ------------------------------------------------------------------
+#
+# XDG Overrides
+# -------------
+#
+# XDG paths are used later (with fallbacks) so they need to be set here.
+#
+# export XDG_CONFIG_HOME=$HOME/.config
+# export XDG_CACHE_HOME=$HOME/.cache
+# export XDG_DATA_HOME=$HOME/.local/share
+# export XDG_RUNTIME_DIR=$HOME/.cache/runtime
+# NOTE: rules for this runtime directory are somewhat complicated:
+#  - Must be user specific (0700)
+#  - Lifetime is bound to user log in, must exist from the first login and until
+#	 the user is fully logged out (irrespective of interim logins).
+#  - The directory contents must not survive reboot or a full login/logout
+#    cycle, but the directory itself should always be available otherwise.
+#  - Local file system, not shared. Must support full OS features.
+#  - Files may be cleaned up if access > 6 hrs or sticky bit unset.
+#  - No large files (may be in RAM!), fallback location should be equivalent.
+#  	 Applications should use this directory for comms and synchronisation.
 
 # set LaTeX paths for TeXLive installation
 path="/opt/latex/current/texmf/doc/info"
