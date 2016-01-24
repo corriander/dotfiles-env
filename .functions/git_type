@@ -1,3 +1,4 @@
+# DEPRECATED. Functionality now implemented within .bash_prompt
 source ~/.functions/in_git_repo
 source ~/.functions/in_git_annex
 

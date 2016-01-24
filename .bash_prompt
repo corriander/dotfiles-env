@@ -18,7 +18,90 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUPSTREAM=true
 GIT_PS1_SHOWSTASHSTATE=true
 
-_ps1_str () {
+
+__env_ps1 () {
+	# Return a summary of the python environment (implemented via venv
+	# or conda) in the following form(s):
+	#
+	#  (venv:environment) or (conda:environment)
+	#
+	# This concept is perhaps extensible to other types of virtual
+	# environments.
+	if [ -n "$VIRTUAL_ENV" ]
+	then
+		manager="venv"
+		environment="${VIRTUAL_ENV##*/}"
+	elif [ -n "$CONDA_DEFAULT_ENV" ]
+	then
+		manager="conda"
+		environment="$CONDA_DEFAULT_ENV"
+	else
+		# We don't appear to be in an environment
+		return 1
+	fi
+	printf "%s:%s" $manager $environment
+	return 0
+}
+
+__aux_ps1 ()
+{
+    # Return a string containing auxiliary context for the prompt. 
+    # This includes information about environments & repositories etc.
+    #
+    # The environment is considered quasi-static (a change of environment will
+    # prompt the PS1 to be refreshed). Passing the environment info string
+    # to this function as an argument allows it to not be evaluated repeatedly.
+    env_str=$1
+    env_pre=${env_str:+${env_str}|}
+    
+    # Git analysis
+    # 3 "types" of git repository considered here: git, vcsh & git-annex
+    if [ "$VCSH_DIRECTORY" ]
+    then 
+        aux_str="$(__git_ps1 " (${env_str:+${env_str}|}vcsh|$VCSH_DIRECTORY:%s)")"
+    elif git config --get annex.uuid >/dev/null 2>&1
+	then
+        # Note we dump stderr here due to etckeeper (permission denied) 
+        aux_str_base="$(__git_ps1 " (${env_str:+${env_str}|}git-annex:%s)")"
+		# 'annex' is present in the branch names for annexes in direct mode only
+		# we always want to identify this repository as an annex, so this is
+		# duplicates in that case; remove the annex from the branch.
+		aux_str_head="${aux_str_base%annex/*}"
+		if [ "$aux_str_head" = "$aux_str_base" ]
+		then
+		    # Repository is not in direct mode
+			aux_str="$aux_str_base"
+		else 
+			aux_str_tail="${aux_str_base#*annex/}"
+			aux_str="$aux_str_head$aux_str_tail"
+		fi
+    else
+        # Either it's a plain git repo or nothing.
+        aux_str="$(__git_ps1 " (${env_str:+${env_str}|}git:%s)")"
+    fi
+    
+    aux_str="${aux_str:- ($env_str)}"  # Replace "" with (environment)
+    aux_str="${aux_str%()}"            # Replace () with ""
+    
+    echo -n "$aux_str"
+} 
+
+__ps1_str () {
+	# Return a string which will be assigned to the PS1 variable.
+	#
+	# NOTE: It's important to note that the PS1 variable is a set of static
+	# data, control characters (including special ones like \w) and *commands*
+	# evaluating dynamic data. This function is a one shot function that
+	# generates the PS1 instruction, it's evaluated once on sourcing and that's
+	# it. There are a couple of implications here:
+	#
+	#  - Any content that changes from prompt to prompt will need to be
+	#    evaluated via a function; '$( function )' will need to be in the
+	#    prompt.
+	#  - Only static (or quasi-static data specific to this interactive bash
+	#    process) may be generated directly here, as this is sourced on init.
+	#    For quasi-static content that will remain the same until exit, this is 
+	#    arguably the best place for it to save re-evaluation at every prompt.
     bwhite='\e[1m'       # set font to bold white
     bblack='\e[1;30m'    # set font to bold black (it's not really..)
     default='\e[0m'      # set font to default
@@ -27,13 +110,9 @@ _ps1_str () {
     str_date="\[${bblack}\][\A]\[${default}\]"
     str_who="\[${bwhite}\]\u@\h\[${default}\]"
 
-	# Using more git variants makes for ambiguous context.
-	# Invoke function git_type to prefix the type of repo.
-	str_git='$(__git_ps1 '"\" (\$( git_type ):%s)\" | sed 's:annex/::')"
-
-    echo ${str_date}' '${str_who}':\w'${str_git}'\n\$ '
+	echo ${str_date}' '${str_who}':\w$(__aux_ps1 '$(__env_ps1)')\n\$ '
 }
 
-PS1=`_ps1_str`
+PS1=$(__ps1_str)
 
-unset _ps1_str
+unset __ps1_str
