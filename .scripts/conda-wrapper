@@ -87,7 +87,7 @@ while :; do
 			shift
 			project=$1
 			projectd=$PROJECT_ROOT/$project
-			cd $projectd || error "No project/directory at '$projectd'"
+			cd $projectd 2>/dev/null || error "No project/directory at '$projectd'"
 
 			environment=$(find_env "$project") || \
 				error "Neither $project-dev or $project environments exist."
