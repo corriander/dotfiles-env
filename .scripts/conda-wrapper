@@ -1,0 +1,117 @@
+#!/bin/bash
+# Wrapper for the conda package manager.
+#
+# Conda does many things excellently but there's always scope for extension...
+# This script extends `conda` by wrapping the base command in a soft, 
+# unobtrusive way. Arguments are passed down to `conda` unless a recognised
+# subcommand is picked up. There are other approaches to doing this, but this is
+# flexible whilst remaining simple.
+#
+# This should be explicitly aliased to conda. For example, in bash:
+#
+#   alias conda=/path/to/conda_wrapper
+#
+# The above of course assumes that this is executable.
+#
+# Alternatives
+# ------------
+#
+#   - https://gist.github.com/mangecoeur/5161488
+#   - https://pypi.python.org/pypi/conda-workon
+
+# Constants / configuration
+PROJECT_ROOT=${CONDAWRAPPER_PROJECTS:-$HOME/projects}
+ALLOW_PS1_CHG=${CONDAWRAPPER_PS1:-true}
+SELF=${0}
+
+# Usage
+usage () {
+cat <<EOF
+Usage: ${0##*/}
+EOF
+}
+
+help_wrapper () {
+# Get conda to output its help text and append ours in a stylistically
+# similar fashion.
+conda help
+cat <<'EOF'
+Extended commands (provided by conda-wrapper):
+
+    develop      Convenience command augments 'enter' by also switching directly
+                 to a python project directory. This relies on an environment
+                 with either the same name as the project's root directory or
+                 the same name with a '-dev' suffix. The latter is preferred,
+                 allowing a simple way to keep the "production" environment
+                 clean (e.g. allowing non-essential packages like ipython and 
+                 jupyter/notebooks to be linked and available for development).
+
+                 The directory containing projects can be configured by setting
+                 CONDAWRAPPER_PROJECTS.
+
+    enter        Enter an existing conda environment. Shell modifications made
+                 by conda are overwritten, but CONDA_DEFAULT_ENV can be used to
+                 modify the prompt.	 
+EOF
+}
+
+array_contains () {
+	local elem
+	for elem in "${@:2}"
+	do [ "$elem" = "$1" ] && return 0
+	done
+	return 1
+}
+
+find_env () {
+	env_list=($(conda env list | awk '!/^#/ {print $1}'))
+	array_contains "$1-dev" "${env_list[@]}" && echo "$1-dev"  && return 0
+	array_contains "$1" "${env_list[@]}" && echo "$1" && return 0
+}
+
+error () {
+	# Report an error and exit
+	echo "Error: ${SELF##*/}: $1" 2>&1 && exit 1
+}
+
+while :; do
+    case $1 in
+        -h|--help|help)
+            # Intercept the conda-supported help arguments.
+            help_wrapper
+            exit 0
+            ;;
+
+		develop)
+			# Switch to a specified python project and associated environment
+			shift
+			project=$1
+			projectd=$PROJECT_ROOT/$project
+			cd $projectd || error "No project/directory at '$projectd'"
+
+			environment=$(find_env "$project") || \
+				error "Neither $project-dev or $project environments exist."
+			#fi
+			$SELF enter $environment
+			exit 0
+			;;
+
+		enter)
+			# Enter a subshell with the specified environment configured
+			shift
+			environment=$1
+			$SHELL -c "
+			source activate $environment
+			echo 
+			echo Entered a subshell loaded with environment: $environment
+			echo Use exit or Ctrl-D to return.
+			exec $SHELL"
+			exit 0
+			;;
+        *)
+            # Anything else, pass it down to conda as-is.
+            conda $@
+            exit 0
+            ;;    
+    esac
+done
