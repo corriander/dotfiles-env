@@ -1,0 +1,15 @@
+#!/bin/bash
+# Set the audio card profile.
+
+CARD=alsa_card.pci-0000_00_14.2
+case $1 in 
+	stereo) 
+		PROFILE=output:iec958-stereo+input:analog-stereo
+		;;
+	surround)
+		PROFILE=output:iec958-ac3-surround-51+input:analog-stereo
+esac 
+pactl set-card-profile $CARD $PROFILE
+
+echo "Switched to $1 profile."
+echo "NOTE: You may have to restart some applications."
