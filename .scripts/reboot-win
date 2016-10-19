@@ -1,0 +1,16 @@
+#!/bin/bash
+# Reboot into Windows.
+#
+# Works by finding the position of the Windows menu entry. Note that there's a
+# subtlety in that Ubuntu's grub nests kernels down a menu level. These
+# shouldn't be included in the count (note the submenu entry should be!) and can
+# be excluded by virtue of their indentation.
+
+MENU_POSITION=$(awk '
+	BEGIN 					{ i=0 }
+	/^(submenu|menuentry)/	{ i++ }
+	/Windows/ 				{ print --i }
+' /boot/grub/grub.cfg)
+
+sudo grub-reboot $MENU_POSITION
+sudo systemctl reboot
