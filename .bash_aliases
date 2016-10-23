@@ -32,6 +32,8 @@ alias cdmedia='cd /srv/multimedia'
 # System Admin
 
 alias mounted='mount | column -t'
+alias log-dmesg='dmesg --human --color=always'	# Colourise and output to less
+alias log-xorg0='$HOME/.scripts/parse-xorg-log.py | less'
 
 # Command replacement
 
