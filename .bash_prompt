@@ -11,8 +11,6 @@
 # `/etc/bash_completion.d/git`; see contents for documentation.
 #
 # Source in `~/.bashrc` or `~/.bash_profile`
-source ~/.functions/git_type
-
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUPSTREAM=true
