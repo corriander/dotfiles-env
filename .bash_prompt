@@ -62,7 +62,16 @@ __aux_ps1 ()
     elif git config --get annex.uuid >/dev/null 2>&1
 	then
         # Note we dump stderr here due to etckeeper (permission denied) 
-        aux_str_base="$(__git_ps1 " (${env_str:+${env_str}|}git-annex:%s)")"
+
+		git_annex_version=$(git annex version | grep -o '[0-9]' | head -1)
+
+		if [ $git_annex_version -lt 6 ]
+		then
+			aux_str_base="$(__git_ps1 " (${env_str:+${env_str}|}git-annex:%s)")"
+		else
+			branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+			aux_str_base=" (${env_str:+${env_str}|}git-annex:${branch})"
+		fi
 		# 'annex' is present in the branch names for annexes in direct mode only
 		# we always want to identify this repository as an annex, so this is
 		# duplicates in that case; remove the annex from the branch.
