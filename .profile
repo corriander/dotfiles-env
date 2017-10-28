@@ -70,6 +70,7 @@ add_to_path ${HOME}/.private/scripts			# sensitive scripts
 add_to_path ${HOME}/.scripts/3rd-party			# 3rd party scripts
 add_to_path /opt/latex/current/bin/x86_64-linux	# TexLive binaries
 add_to_path /opt/miniconda3/bin					# Miniconda install.
+add_to_path /opt/conda/bin				# New conda install
 
 # ------------------------------------------------------------------
 #
