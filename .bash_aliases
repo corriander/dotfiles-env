@@ -1,5 +1,6 @@
 # Enable alias expansion for vim, http://stackoverflow.com/a/19819036
 shopt -s expand_aliases 
+. $HOME/.private/net
 
 # Package Management
 alias apt-install='sudo apt-get install'
@@ -46,4 +47,4 @@ alias rgrep='rgrep --color=auto'
 alias vless='vim -u /usr/share/vim/vim74/macros/less.vim'
 alias synonym='dict -d moby-thesaurus'
 alias colout='colout -T $HOME/.config/colours'
-alias conda='conda-wrapper'
+alias conda='CONDAWRAPPER_PROJECTS=/home/alex/repos conda-wrapper'
