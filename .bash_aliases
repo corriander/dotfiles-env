@@ -38,13 +38,20 @@ alias log-xorg0='$HOME/.scripts/parse-xorg-log.py | less'
 
 # Command replacement
 
-case $HOSTNAME in
-	$HOST_DESKTOP ) alias vim='TERM=gnome-256color vim' ;;	# Gnome, right?
-	$HOST_LAPTOP ) alias vim='TERM=xterm-256color vim' ;; # ^^ doesn't exist
-esac
 alias dua='baobab'
 alias rgrep='rgrep --color=auto'
 alias vless='vim -u /usr/share/vim/vim74/macros/less.vim'
 alias synonym='dict -d moby-thesaurus'
 alias colout='colout -T $HOME/.config/colours'
-alias conda='CONDAWRAPPER_PROJECTS=/home/alex/repos conda-wrapper'
+
+case $HOSTNAME in
+	$HOST_DESKTOP )
+		alias vim='TERM=gnome-256color vim' # Gnome, right?
+		alias conda='conda-wrapper'
+		;;
+
+	$HOST_LAPTOP_WSL )
+		alias vim='TERM=xterm-256color vim'
+		alias conda='CONDAWRAPPER_PROJECTS=/home/alex/repos conda-wrapper'
+		;;
+esac
