@@ -1,5 +1,6 @@
 # Enable alias expansion for vim, http://stackoverflow.com/a/19819036
 shopt -s expand_aliases 
+. $HOME/.private/net
 
 # Package Management
 alias apt-install='sudo apt-get install'
@@ -38,12 +39,12 @@ alias log-xorg0='$HOME/.scripts/parse-xorg-log.py | less'
 # Command replacement
 
 case $HOSTNAME in
-	phobos ) alias vim='TERM=gnome-256color vim' ;;	# Gnome, right?
-	deimos ) alias vim='TERM=xterm-256color vim' ;; # ^^ doesn't exist
+	$HOST_DESKTOP ) alias vim='TERM=gnome-256color vim' ;;	# Gnome, right?
+	$HOST_LAPTOP ) alias vim='TERM=xterm-256color vim' ;; # ^^ doesn't exist
 esac
 alias dua='baobab'
 alias rgrep='rgrep --color=auto'
 alias vless='vim -u /usr/share/vim/vim74/macros/less.vim'
 alias synonym='dict -d moby-thesaurus'
 alias colout='colout -T $HOME/.config/colours'
-alias conda='conda-wrapper'
+alias conda='CONDAWRAPPER_PROJECTS=/home/alex/repos conda-wrapper'
