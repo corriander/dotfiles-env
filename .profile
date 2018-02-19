@@ -135,6 +135,7 @@ export VIMINIT='let $MYVIMRC = "'${XDF_CONFIG_HOME:-~/.config}'/vim/vimrc" | sou
 
 # Special FUNCPATH for shell functions
 export FUNCPATH=$HOME/.functions
+. $FUNCPATH/default
 
 # Configure python environment
 #
