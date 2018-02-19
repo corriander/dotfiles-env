@@ -1,0 +1,12 @@
+#!/bin/bash
+# Wake machine via WOL.
+# Machines
+. $HOME/.private/net
+wake () {
+	case $1 in
+		$HOST_DESKTOP) mac=$MAC_DESKTOP;;
+		*) echo "Hostname '$1' is not recognised." >&2 && return 1 ;;
+	esac
+	wakeonlan $mac
+	return 0
+}
