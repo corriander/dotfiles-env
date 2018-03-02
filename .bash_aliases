@@ -2,12 +2,6 @@
 shopt -s expand_aliases 
 . $HOME/.private/net
 
-# Package Management
-alias apt-install='sudo apt-get install'
-alias apt-remove='sudo apt-get remove'
-alias apt-update='sudo apt-get update'
-alias apt-search='apt-cache search'
-
 # File / Folder Management
 
 alias mvi='mv -iv'
