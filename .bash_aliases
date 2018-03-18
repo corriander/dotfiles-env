@@ -48,5 +48,6 @@ case $HOSTNAME in
 	$HOST_LAPTOP_WSL )
 		alias vim='TERM=xterm-256color vim'
 		alias conda='CONDAWRAPPER_PROJECTS=/home/alex/repos conda-wrapper'
+		alias sshagent='eval $(ssh-agent -s); ssh-add'
 		;;
 esac
