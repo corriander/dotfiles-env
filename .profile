@@ -143,3 +143,15 @@ export FUNCPATH=$HOME/.functions
 export JUPYTER_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/jupyter
 # Set the default location of Python projects.
 export CONDAWRAPPER_PROJECTS=~/code/py
+
+# ------------------------------------------------------------------------------
+#
+# WSL-specific configuration
+#
+# ------------------------------------------------------------------------------
+# Source the SSH environment file to attach to an already-running SSH agent.
+# https://github.com/bahamas10/dotfiles/commit/fd7047243293674ed38f69ce5653104373ac727b
+if uname -a | grep -q '^Linux.*Microsoft'
+then
+	. ~/.ssh/environment 2>&1 >/dev/null
+fi
