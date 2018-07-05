@@ -1,0 +1,15 @@
+# Function definition
+function vimpy () {
+	# Open a python source file and its tests from the project root.
+	#
+	# $1 : filename 
+	# 
+	# Assumes a standard python project structure; the file *and*
+	# tests do exist, right?
+	if [ ! -f */$1.py ]
+	then
+		echo "Error: No python source file '$1.py' found." >2 && return 1
+	else
+		vim -O */$1.py */tests/test_$1.py
+	fi
+}

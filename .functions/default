@@ -2,3 +2,4 @@
 function_path=$(dirname ${BASH_SOURCE[0]})
 
 . $function_path/wake
+. $function_path/vimpy
