@@ -5,6 +5,8 @@
 !.config
 !.config/autostart
 !.config/autostart/*
+!.config/conda
+!.config/conda/*
 !.functions
 !.functions/*
 !.functions/unittests
@@ -17,6 +19,8 @@
 !.local/bin
 !.local/bin/*
 !.local/share
+!.local/share/conda
+!.local/share/conda/*
 !.local/share/nautilus-python
 !.local/share/nautilus-python/extensions
 !.local/share/nautilus-python/extensions/*

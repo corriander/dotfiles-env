@@ -143,6 +143,7 @@ export FUNCPATH=$HOME/.functions
 export JUPYTER_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/jupyter
 # Set the default location of Python projects.
 export CONDAWRAPPER_PROJECTS=~/code/py
+export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 
 # ------------------------------------------------------------------------------
 #
