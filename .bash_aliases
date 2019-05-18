@@ -47,8 +47,13 @@ case $HOSTNAME in
 		alias finances='xmacroplay $DISPLAY < $HOME/.scripts/conda_develop_finances.xmacro'
 		;;
 
-	$HOST_LAPTOP_WSL | $HOST_DESKTOP_WSL)
+	$HOST_LAPTOP_WSL | $HOST_DESKTOP_WSL )
 		alias vim='TERM=xterm-256color vim'
 		alias conda='CONDAWRAPPER_PROJECTS=/home/alex/repos conda-wrapper'
+		;;
+
+	* )
+		alias vim='TERM=xterm-256color vim'
+		alias conda='CONDAWRAPPER_PROJECTS=~/repos conda-wrapper'
 		;;
 esac
