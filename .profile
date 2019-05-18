@@ -133,9 +133,10 @@ export EDITOR=/usr/bin/vim
 # See https://tlvince.com/vim-respect-xdg; required for vimrc.
 export VIMINIT='let $MYVIMRC = "'${XDF_CONFIG_HOME:-~/.config}'/vim/vimrc" | source $MYVIMRC'
 
-# Special FUNCPATH for shell functions
+# Special FUNCPATH for shell functions; some functions have missing dependencies;
+# shush them if so.
 export FUNCPATH=$HOME/.functions
-. $FUNCPATH/default
+. $FUNCPATH/default 2>/dev/null
 
 # Configure python environment
 #
@@ -154,5 +155,6 @@ export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 # https://github.com/bahamas10/dotfiles/commit/fd7047243293674ed38f69ce5653104373ac727b
 if uname -a | grep -q '^Linux.*Microsoft'
 then
-	. ~/.ssh/environment 2>&1 >/dev/null
+	# This may not exist in all environments so just be quiet if missing.
+	>&2 . ~/.ssh/environment >/dev/null
 fi

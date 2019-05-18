@@ -1,6 +1,8 @@
 # Enable alias expansion for vim, http://stackoverflow.com/a/19819036
 shopt -s expand_aliases 
-. $HOME/.private/net
+
+# This is for custom settings on home network computers; ignore if not available
+. $HOME/.private/net 2>/dev/null
 
 # File / Folder Management
 
