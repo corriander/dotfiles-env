@@ -39,6 +39,7 @@ alias rgrep='rgrep --color=auto'
 alias vless='vim -u /usr/share/vim/vim74/macros/less.vim'
 alias synonym='dict -d moby-thesaurus'
 alias colout='colout -T $HOME/.config/colours'
+alias tmux='tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf'
 
 case $HOSTNAME in
 	$HOST_DESKTOP )
