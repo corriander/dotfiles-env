@@ -156,5 +156,5 @@ export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 if uname -a | grep -q '^Linux.*Microsoft'
 then
 	# This may not exist in all environments so just be quiet if missing.
-	>&2 . ~/.ssh/environment >/dev/null
+	. ~/.ssh/environment >&2 >/dev/null || ~/.local/bin/start-ssh-agent >&2 >/dev/null
 fi
