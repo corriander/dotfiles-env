@@ -102,9 +102,9 @@ while :; do
 			environment=$1
 			# Check our environment exists before trying to activate it so we
 			# avoid a confusing "Entered a subshell..." message.
-			if ! conda env list | grep "^$environment" >&2 >/dev/null
+			if ! conda env list | grep "^$environment\s\+" >&2 >/dev/null
 			then
-				error "No matching environment found"
+				error "Could not find environment $environment"
 			fi
 			$SHELL -c "
 			source activate $environment
