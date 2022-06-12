@@ -69,7 +69,7 @@ add_to_path ${HOME}/.scripts/git				# git-related scripts
 add_to_path ${HOME}/.private/scripts			# sensitive scripts
 add_to_path ${HOME}/.scripts/3rd-party			# 3rd party scripts
 add_to_path /opt/latex/current/bin/x86_64-linux	# TexLive binaries
-add_to_path /opt/miniconda3/bin					# Miniconda install.
+add_to_path /opt/alex/miniconda3/bin			# Miniconda install.
 
 # ------------------------------------------------------------------
 #
@@ -143,7 +143,7 @@ export FUNCPATH=$HOME/.functions
 # Override the location of jupyter config.
 export JUPYTER_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/jupyter
 # Set the default location of Python projects.
-export CONDAWRAPPER_PROJECTS=~/code/py
+export CONDAWRAPPER_PROJECTS=~/repos
 export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 
 # ------------------------------------------------------------------------------
