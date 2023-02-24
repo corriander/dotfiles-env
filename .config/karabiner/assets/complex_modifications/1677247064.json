@@ -1,0 +1,1 @@
+{"title":"Open Terminal","rules":[{"description":"Open a terminal window with Ctrl+Alt/Cmd+T","manipulators":[{"from":{"key_code":"t","modifiers":{"mandatory":["left_control","left_gui"],"optional":["caps_lock"]}},"to":[{"shell_command":"open -a Terminal ~"}],"type":"basic"}]}]}
