@@ -33,5 +33,6 @@
     clean = expand --tabs=4 --initial
 [push]
     default = simple
+	autoSetupRemote = true
 [merge]
     tool = meld
