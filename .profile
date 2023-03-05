@@ -114,7 +114,7 @@ export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 # ------------------------------------------------------------------------------
 # Source the SSH environment file to attach to an already-running SSH agent.
 # https://github.com/bahamas10/dotfiles/commit/fd7047243293674ed38f69ce5653104373ac727b
-if uname -a | grep -q '^Linux.*Microsoft'
+if uname -a | grep -q '^Linux.*[Mm]icrosoft'
 then
 	# This may not exist in all environments so just be quiet if missing.
 	. ~/.ssh/environment >&2 >/dev/null || ~/.local/bin/start-ssh-agent >&2 >/dev/null
