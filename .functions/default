@@ -1,5 +1,19 @@
 # Source me.
-function_path=$(dirname ${BASH_SOURCE[0]})
+detect_shell () {
+	echo $(ps -p $$ -ocomm=)	
+}
+
+if [ $(detect_shell) = bash ]
+then 
+	function_path=$(dirname ${BASH_SOURCE[0]})
+elif [ $(detect_shell) = zsh ]
+then
+	# Use a different approach; although ${BASH_SOURCE[0]} will commonly work, when sourced in zshrc it won't
+	function_path=$(dirname ${(%):-%N})
+else
+	>&2 echo "error: unknown shell - unable to determine functions path"
+fi
 
 . $function_path/wake
 . $function_path/vimpy
+. $function_path/detect_platform

@@ -1,0 +1,13 @@
+detect_platform () {
+	# Inspect the full uname string to work out what we are.
+	if uname -a | grep -q '^Linux.*[Mm]icrosoft'
+	then
+		echo wsl
+	elif uname -a | grep -q '[Darwin]'
+	then
+		echo macos
+	else
+		# Default assumption
+		echo linux
+	fi
+}
