@@ -8,18 +8,13 @@ export ZSH="$HOME/.config/omz"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-source /opt/homebrew/opt/spaceship/spaceship.zsh
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_TIME_FORMAT='[%D{%H:%M}]'
-SPACESHIP_DIR_PREFIX=''
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -114,20 +109,25 @@ bindkey -v
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/alex/app/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/alex/app/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/alex/app/mambaforge/etc/profile.d/conda.sh" ]; then
-        . "/Users/alex/app/mambaforge/etc/profile.d/conda.sh"
+    if [ -f "/home/alex/app/mambaforge/etc/profile.d/conda.sh" ]; then
+        . "/home/alex/app/mambaforge/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/alex/app/mambaforge/bin:$PATH"
+        export PATH="/home/alex/app/mambaforge/bin:$PATH"
     fi
 fi
 unset __conda_setup
 
-if [ -f "/Users/alex/app/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/Users/alex/app/mambaforge/etc/profile.d/mamba.sh"
+if [ -f "/home/alex/app/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/home/alex/app/mambaforge/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
 
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_TIME_FORMAT='[%D{%H:%M}]'
+SPACESHIP_DIR_PREFIX=''
+
+. ~/.config/profile.common
