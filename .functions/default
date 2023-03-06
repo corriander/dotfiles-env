@@ -1,6 +1,9 @@
 # Source me.
 detect_shell () {
-	echo $(ps -p $$ -ocomm=)	
+	string=$(ps -p $$ -oargs=)	
+	string=${string/*\//}	# strip dirpath - (occurs on macos subshell)
+	string=${string/-/}		# strip leading - (occurs on macos login shell)
+	echo $string
 }
 
 if [ $(detect_shell) = bash ]
