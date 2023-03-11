@@ -8,6 +8,9 @@
 export FUNCPATH=${HOME}/.functions
 . $FUNCPATH/default #2>/dev/null
 
+[ $(detect_shell) = bash ] && shopt -s expand_aliases
+. ~/.config/profile.aliases
+
 # ------------------------------------------------------------------
 #
 #	Generic PATH settings
@@ -43,3 +46,5 @@ export CONDAWRAPPER_PROJECTS=~/repos
 export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 
 # R, LaTeX see old .profile
+
+
