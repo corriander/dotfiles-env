@@ -3,13 +3,14 @@
 !.bin
 !.bin/*
 !.config
-!.config/profile.*
 !.config/autostart
 !.config/autostart/*
 !.config/conda
 !.config/conda/*
 !.config/karabiner
 !.config/karabiner/*
+!.config/profile
+!.config/profile/*
 !.functions
 !.functions/*
 !.functions/unittests

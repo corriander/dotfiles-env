@@ -130,4 +130,4 @@ SPACESHIP_TIME_SHOW=true
 SPACESHIP_TIME_FORMAT='[%D{%H:%M}]'
 SPACESHIP_DIR_PREFIX=''
 
-. ~/.config/profile.common
+. ~/.config/profile/common

@@ -27,7 +27,7 @@ fi
 #                        USER MODIFICATIONS
 #
 # ------------------------------------------------------------------
-. ${HOME}/.config/profile.common
+. ${HOME}/.config/profile/common
 
 add_to_path /opt/latex/current/bin/x86_64-linux	# TexLive binaries
 add_to_path /opt/alex/miniconda3/bin			# Miniconda install.

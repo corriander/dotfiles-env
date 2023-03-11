@@ -103,7 +103,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 if [ -f ~/.bash_aliases ]; then
 	shopt -s expand_aliases
-    . ~/.config/profile.aliases
+    . ~/.config/profile/aliases
 fi
 
 # enable programmable completion features (you don't need to enable
