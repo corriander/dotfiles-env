@@ -33,6 +33,7 @@ add_to_path ${HOME}/.scripts/3rd-party          # 3rd party scripts
 #
 # -----------------------------------------------------------------
 # TODO shared vim/neovim config needs some work. nvim undo files break vim
+export EDITOR=/usr/bin/vim
 export VIMINIT='let $MYVIMRC = "'${XDF_CONFIG_HOME:-~/.config}'/vim/vimrc" | source $MYVIMRC'
 
 # -----------------------------------------------------------------
