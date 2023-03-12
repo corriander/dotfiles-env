@@ -7,6 +7,11 @@
 !.config/autostart/*
 !.config/conda
 !.config/conda/*
+!.config/ipython
+!.config/ipython/profile_default
+!.config/ipython/profile_default/ipython_config.py
+!.config/ipython/profile_default/startup
+!.config/ipython/profile_default/startup/*
 !.config/karabiner
 !.config/karabiner/*
 !.config/profile
