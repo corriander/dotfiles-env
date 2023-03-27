@@ -22,6 +22,7 @@
     rewind-index = reset --mixed HEAD^1
     rewind-files = reset --hard HEAD^1
     wdiff = diff --color-words
+    addnw=!sh -c 'git diff -U0 -w --no-color --src-prefix=a/ --dst-prefix=b/ "$@" | git apply --cached --ignore-whitespace --unidiff-zero -'
 [color]
     diff = auto
     status = auto
