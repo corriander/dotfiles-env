@@ -37,3 +37,5 @@
 	autoSetupRemote = true
 [merge]
     tool = meld
+[init]
+	defaultBranch = main
