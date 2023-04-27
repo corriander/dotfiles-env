@@ -46,4 +46,9 @@ export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 
 # R, LaTeX see old .profile
 
+# Terraform, serverless, AWS
+# NOTE the docs say it should be of the form *.tfrc (rather than terraform.rc)
+export TF_CLI_CONFIG_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/terraform/config.tfrc
 
+# .NET
+add_to_path ${HOME}/.dotnet/tools after
