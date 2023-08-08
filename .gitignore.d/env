@@ -16,6 +16,7 @@
 !.config/karabiner/*
 !.config/profile
 !.config/profile/*
+!.config/starship.toml
 !.functions
 !.functions/*
 !.functions/unittests
