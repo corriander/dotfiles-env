@@ -8,7 +8,16 @@ export ZSH="$HOME/.config/omz"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
+eval "$(starship init zsh);init_result=$?"
+
+if [[ $init_result -eq 127 ]]; then
+	2>&1 echo "Warning: starship is not installed; installing..."
+	curl -sS https://starship.rs/install.sh | sh
+elif [[ $init_result -gt 0 ]]; then
+	2>&1 echo "Error: starship init failed"
+fi
+
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
