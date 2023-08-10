@@ -83,6 +83,7 @@ plugins=(
 	git 
 	vi-mode
 	poetry
+	tmux
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -113,8 +114,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+## Plugin configuration
+#
 # Enable vi mode
 bindkey -v 
+
+ZSH_TMUX_CONFIG=$HOME/.config/tmux/tmux.conf
+# We'll take care of this in tmux.conf; looks like a bug in the plugin means
+# when this is set (default is true), specified tmux conf is NOT loaded. 
+ZSH_TMUX_FIXTERM=false
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
