@@ -27,7 +27,7 @@
 !.gitignore.d/env
 !.local
 !.local/bin
-!.local/bin/*
+.local/bin/*
 !.local/share
 !.local/share/conda
 !.local/share/conda/*
