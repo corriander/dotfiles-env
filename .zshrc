@@ -1,9 +1,11 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Source profile customisations early so all paths are present etc.
+. ~/.config/profile/common
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.config/omz"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -143,8 +145,7 @@ if [ -f "$HOME/app/mambaforge/etc/profile.d/mamba.sh" ]; then
 fi
 # <<< conda initialize <<<
 
+
 SPACESHIP_TIME_SHOW=true
 SPACESHIP_TIME_FORMAT='[%D{%H:%M}]'
 SPACESHIP_DIR_PREFIX=''
-
-. ~/.config/profile/common
