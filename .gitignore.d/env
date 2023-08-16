@@ -16,6 +16,8 @@
 !.config/karabiner/*
 !.config/profile
 !.config/profile/*
+!.config/tmux
+!.config/tmux/*
 !.config/starship.toml
 !.functions
 !.functions/*
