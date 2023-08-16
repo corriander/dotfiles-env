@@ -40,8 +40,6 @@ alias colout='colout -T $HOME/.config/colours'
 # reinstate if plugin not used
 #alias tmux='tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf'
 
-alias nvim='~/app/nvim.appimage'
-
 case $HOSTNAME in
 	$HOST_DESKTOP )
 		alias vim='TERM=gnome-256color vim' # Gnome, right?
@@ -59,3 +57,5 @@ case $HOSTNAME in
 		alias conda='CONDAWRAPPER_PROJECTS=~/repos conda-wrapper'
 		;;
 esac
+
+# **NOTE** Platform-specific aliases are in the associated ${platform}.sh

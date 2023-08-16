@@ -26,3 +26,8 @@ export EDITOR=/usr/bin/vim
 #    # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
 #    (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
 #fi
+
+# --------------------------------------------------------------------
+# Platform-specific aliases
+# --------------------------------------------------------------------
+alias nvim='~/app/nvim.appimage'
