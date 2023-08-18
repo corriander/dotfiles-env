@@ -18,7 +18,33 @@
                 },
                 "rules": [
                     {
-                        "description": "Open a terminal window with Ctrl+Alt/Cmd+T",
+                        "description": "Open a terminal window with Ctrl+Shift+Alt/Cmd+T",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_control",
+                                            "left_gui",
+                                            "left_shift"
+                                        ],
+                                        "optional": [
+                                            "caps_lock"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "/opt/homebrew/bin/wezterm cli spawn --new-window"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Open a terminal tab with Ctrl+Alt/Cmd+T",
                         "manipulators": [
                             {
                                 "from": {
@@ -35,7 +61,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a Terminal ~"
+                                        "shell_command": "/opt/homebrew/bin/wezterm cli spawn"
                                     }
                                 ],
                                 "type": "basic"
