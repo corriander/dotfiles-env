@@ -82,10 +82,12 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	git 
-	vi-mode
-	poetry
-	tmux
+    git
+    vi-mode
+    poetry
+    tmux
+    tmuxinator
+    gitignore
 )
 
 source $ZSH/oh-my-zsh.sh
