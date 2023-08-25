@@ -27,6 +27,9 @@ add_to_path ${HOME}/.scripts/3rd-party          # 3rd party scripts
 . ${HOME}/.config/profile/$(detect_platform).sh
 . ${HOME}/.config/profile/$(detect_platform).$(detect_shell)
 
+. ${HOME}/.config/profile/common.d/*.sh
+. ${HOME}/.config/profile/common.d/*.$(detect_shell)
+
 # -----------------------------------------------------------------
 # 
 #  Editors

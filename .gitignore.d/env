@@ -16,6 +16,8 @@
 !.config/karabiner/*
 !.config/profile
 !.config/profile/*
+!.config/profile/common.d
+!.config/profile/common.d/*
 !.config/tmux
 !.config/tmux/*
 !.config/wezterm
