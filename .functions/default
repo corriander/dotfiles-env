@@ -22,3 +22,4 @@ fi
 . $function_path/vimpy
 . $function_path/detect_platform
 . $function_path/add_to_path.bash
+. $function_path/random_string.sh
