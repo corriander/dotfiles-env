@@ -11,9 +11,11 @@ export FUNCPATH=${HOME}/.functions
 [ $(detect_shell) = bash ] && shopt -s expand_aliases
 . ~/.config/profile/aliases
 
+__hostname=$(hostname) # we will override this in some configs to disambiguate
+
 # ------------------------------------------------------------------
 #
-#	Generic PATH settings
+#   Generic PATH settings
 #
 # ------------------------------------------------------------------
 add_to_path ${HOME}/.bin                        # my bin
@@ -26,6 +28,12 @@ add_to_path ${HOME}/.scripts/3rd-party          # 3rd party scripts
 # Source platform-specific profile config
 . ${HOME}/.config/profile/$(detect_platform).sh
 . ${HOME}/.config/profile/$(detect_platform).$(detect_shell)
+
+# Source host-specific profile config if it exists
+if [ -f ${HOME}/.config/profile/host/$__hostname.$(detect_shell) ]; then
+    . ${HOME}/.config/profile/host/$__hostname.$(detect_shell)
+fi
+unset __hostname
 
 . ${HOME}/.config/profile/common.d/*.sh
 . ${HOME}/.config/profile/common.d/*.$(detect_shell)
