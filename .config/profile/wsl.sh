@@ -6,8 +6,6 @@
 /usr/bin/keychain -q --nogui $HOME/.ssh/id_ed25519
 . $HOME/.keychain/$HOST-sh
 
-# TODO shared vim/neovim config needs some work. nvim undo files break vim
-export EDITOR=/usr/bin/vim
 
 # Manage SSH keys in windows password manager
 # Configure ssh forwarding
@@ -30,4 +28,7 @@ export EDITOR=/usr/bin/vim
 # --------------------------------------------------------------------
 # Platform-specific aliases
 # --------------------------------------------------------------------
-alias nvim='~/app/nvim.appimage'
+NVIM_PATH=~/app/nvim.appimage
+
+export EDITOR=$NVIM_PATH
+alias nvim=$NVIM_PATH
