@@ -35,8 +35,13 @@ if [ -f ${HOME}/.config/profile/host/$__hostname.$(detect_shell) ]; then
 fi
 unset __hostname
 
-. ${HOME}/.config/profile/common.d/*.sh
-. ${HOME}/.config/profile/common.d/*.$(detect_shell)
+# Source common (and shell-specific) config
+for f in ${HOME}/.config/profile/common.d/*.sh; do
+    . $f
+done
+for f in ${HOME}/.config/profile/common.d/*.$(detect_shell); do
+    . $f
+done
 
 # -----------------------------------------------------------------
 # 
