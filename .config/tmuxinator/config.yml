@@ -72,10 +72,11 @@ windows:
         - vcsh enter editors
 
   - bootstrap:
-      layout: main-vertical
+      layout: 47af,272x83,0,0{157x83,0,0,0,114x83,158,0[114x41,158,0,4,114x41,158,42,5]}
       root: ~/repos/system-bootstrap
       panes:
-        - project-repo: nvim .
+        - editor: nvim .
+        - project-shell: #shell
         - dotfiles-repo:
             - cd ~
             - vcsh enter bootstrap

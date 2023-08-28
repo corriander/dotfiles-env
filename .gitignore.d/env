@@ -20,6 +20,8 @@
 !.config/profile/common.d/*
 !.config/tmux
 !.config/tmux/*
+!.config/tmuxinator
+!.config/tmuxinator/*
 !.config/wezterm
 !.config/wezterm/*
 !.config/starship.toml
