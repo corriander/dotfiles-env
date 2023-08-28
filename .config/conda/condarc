@@ -1,3 +1,4 @@
 envs_dirs:
   - ~/.local/share/conda/envs
 auto_activate_base: false
+changeps1: false
