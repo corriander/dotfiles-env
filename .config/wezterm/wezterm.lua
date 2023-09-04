@@ -2,7 +2,6 @@
 local wezterm = require 'wezterm'
 
 local act = wezterm.action
-local mux = wezterm.mux
 
 -- This table will hold the configuration.
 local config = {}
@@ -45,43 +44,35 @@ config.font = wezterm.font 'FiraCode NF'
 -------------------------------------------------------------------------------
 -- Workspaces
 -------------------------------------------------------------------------------
--- Defaults
-wezterm.on('gui-startup', function(cmd)
-  -- allow `wezterm start -- something` to affect what we spawn
-  -- in our initial window
-  local args = {}
-  if cmd then
-    args = cmd.args
-  end
+local module_exists, workspaces = pcall(require, "acds-workspaces")
+if not(module_exists) then
+    local mux = wezterm.mux
+    print("no workspaces configured")
+    -- wezterm.on('gui-startup', function(cmd)
+    --     local args = {}
+    --     if cmd then
+    --         args = cmd.args
+    --     end
 
-  -- Set a workspace for coding on a current project
-  -- Top pane is for the editor, bottom pane is for the build tool
-  local tab, asm_pane, window = mux.spawn_window {
-    workspace = 'attack-surface-management',
-    cwd = '~',
-    args = args,
-  }
-  -- launch tmuxinator project
-  asm_pane:send_text 'txs asm\n'
+    --     -- spawn_window can just spawn the default program without args, but try
+    --     -- to hint that the workspace configuration isn't present.
+    --     local tab, pane, window = mux.spawn_window {
+    --         workspace = 'default-workspace',
+    --         args = args,
+    --     }
+    --     --pane:send_text '# acds-workspaces.lua not present\n'
+    -- end)
+    wezterm.on('update-right-status', function(window, pane)
+        window:set_right_status('missing-workspace-configuration')
+    end)
+end
 
-  -- A workspace for interacting with a local machine that
-  -- runs some docker containners for home automation
-  local tab, config_pane, window = mux.spawn_window {
-    workspace = 'general-configuration',
-    args = args,
-  }
-  config_pane:send_text 'txs config\n'
 
-  -- We want to startup in the asm workspace
-  mux.set_active_workspace 'attack-surface-management'
-end)
-
--- Navigation Keys
-wezterm.on('update-right-status', function(window, pane)
-  window:set_right_status(window:active_workspace())
-end)
-
+-------------------------------------------------------------------------------
+-- Key Mapping
+-------------------------------------------------------------------------------
 config.keys = {
+  -- workspace navigation
   {
     key = '9',
     mods = 'ALT',

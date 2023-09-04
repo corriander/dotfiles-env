@@ -24,6 +24,7 @@
 !.config/tmuxinator/*
 !.config/wezterm
 !.config/wezterm/*
+.config/wezterm/*acds*
 !.config/starship.toml
 !.functions
 !.functions/*
