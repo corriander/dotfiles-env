@@ -80,6 +80,12 @@ config.keys = {
   },
   { key = 'RightArrow', mods = 'SUPER', action = act.SwitchWorkspaceRelative(1) },
   { key = 'LeftArrow', mods = 'SUPER', action = act.SwitchWorkspaceRelative(-1) },
+  -- tmux leader mapping for macos
+  {
+      key = 'a',
+      mods = 'CMD',
+      action = wezterm.action.SendKey { key = 'a', mods = 'OPT' }
+  }
 }
 
 -- and finally, return the configuration to wezterm
