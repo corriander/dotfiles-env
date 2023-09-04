@@ -22,6 +22,7 @@
 !.config/tmux/*
 !.config/tmuxinator
 !.config/tmuxinator/*
+.config/tmuxinator/*acds*
 !.config/wezterm
 !.config/wezterm/*
 .config/wezterm/*acds*
