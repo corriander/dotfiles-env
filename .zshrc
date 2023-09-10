@@ -134,3 +134,14 @@ ZSH_TMUX_FIXTERM=false
 SPACESHIP_TIME_SHOW=true
 SPACESHIP_TIME_FORMAT='[%D{%H:%M}]'
 SPACESHIP_DIR_PREFIX=''
+
+# pnpm
+export PNPM_HOME="/home/alex/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+#
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

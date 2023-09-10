@@ -36,6 +36,8 @@
     default = current
 	autoSetupRemote = true
 [merge]
-    tool = meld
+	tool = vimdiff
 [init]
 	defaultBranch = main
+[mergetool "vimdiff"]
+	path = /home/alex/app/nvim.appimage

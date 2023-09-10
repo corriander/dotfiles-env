@@ -118,3 +118,5 @@ if ! shopt -oq posix; then
 fi
 
 . $HOME/.bash_prompt
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
