@@ -73,11 +73,10 @@ _conda_wrapper () {
             fi
 
             zsh -c "
-            . ~/.zshrc
-            $inner activate $environment
             echo
-            echo Entered a subshell loaded with conda environment: $environment
-            echo Exit the subshell to leave the environment.
+            export CONDA_SHELL=${inner}:${environment}
+            echo Entered a subshell for conda environment: $environment
+            echo Use CTRL-D or exit to leave the environment
             zsh -i"
             return 0
             ;;
@@ -87,3 +86,9 @@ _conda_wrapper () {
             ;;
     esac
 }
+
+if [[ ! -z "$CONDA_SHELL" ]]; then # && [[ "$CONDA_SHLVL" -gt 0 ]]; then
+    #echo "CONDA_SHELL=${CONDA_SHELL}"
+    #echo "activating"
+    eval ${CONDA_SHELL/:/ activate }
+fi
