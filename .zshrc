@@ -1,3 +1,6 @@
+[ -z "$ZPROF" ] || zmodload zsh/zprof
+# Use `ZPROF=1 zsh -i -c exit` to profile startup times
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -82,6 +85,11 @@ fi
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
+zstyle ':omz:plugins:nvm' lazy yes
+# Alternative:
+# zstyle ':omz:plugins:nvm' autoload yes
+
 plugins=(
     git
     vi-mode
@@ -89,6 +97,7 @@ plugins=(
     tmux
     tmuxinator
     gitignore
+    nvm
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -144,3 +153,4 @@ esac
 # pnpm end
 #
 
+[ -z "$ZPROF" ] || zprof

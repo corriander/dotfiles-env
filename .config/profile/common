@@ -61,11 +61,6 @@ export JUPYTER_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/jupyter
 export CONDAWRAPPER_PROJECTS=~/repos
 export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 
-# Node.js
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # R, LaTeX see old .profile
 
 # Terraform, serverless, AWS
