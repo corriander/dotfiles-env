@@ -24,3 +24,4 @@ fi
 . $function_path/add_to_path.bash
 . $function_path/random_string.sh
 . $function_path/fzf1.sh
+. $function_path/jwt.sh
