@@ -25,6 +25,10 @@
 #    (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
 #fi
 
+# Ensure GPG key / pass combo is available as a backend to granted; this will
+# allow passphrase prompts when caching credentials.
+export GPG_TTY=$(tty)
+
 # -----------------------------------------------------------------------------
 # PATH
 # -----------------------------------------------------------------------------
