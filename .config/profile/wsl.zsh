@@ -6,6 +6,26 @@ SPACESHIP_ASYNC_SHOW=false
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+__configure_aws_codeartifact () {
+    # requires poetry-source-env plugin
+    #domain_owner=$(aws sts get-caller-identity --query "Account" --output text)
+    domain_owner=$(aws configure get sso_account_id)
+    region=$(aws configure get region)
+    domain=$(aws codeartifact list-domains --query "domains[0].name" --output text)
+    repo=$(aws codeartifact list-repositories --query 'repositories[?contains(name, ''`-`'') == `false`].name' --output text)
+    export POETRY_REPOSITORIES_CODEARTIFACT_URL=$(
+        aws codeartifact get-repository-endpoint \
+            --domain-owner ${domain_owner} \
+            --region ${region} \
+            --domain ${domain} \
+            --repository ${repo} \
+            --format pypi \
+            --query repositoryEndpoint \
+            --output text
+    )simple/
+    export POETRY_REPOSITORIES_CODEARTIFACT_PRIORITY=supplemental
+}
+
 assume () {
     cmd=/usr/local/bin/assume
     if [[ "$1" == "--unset" ]]; then
@@ -25,6 +45,7 @@ assume () {
         echo ""
         export AWS_PROFILE=$1
         aws sso login
+        __configure_aws_codeartifact
     else
         $cmd "$@"
     fi
