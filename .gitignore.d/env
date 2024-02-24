@@ -8,6 +8,8 @@
 !.config/autostart/*
 !.config/conda
 !.config/conda/*
+!.config/jupyter
+!.config/jupyter/*
 !.config/karabiner
 !.config/karabiner/*
 !.config/profile
