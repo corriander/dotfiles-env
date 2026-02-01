@@ -43,3 +43,7 @@ NVIM_PATH=~/app/nvim.appimage
 
 export EDITOR=$NVIM_PATH
 alias nvim=$NVIM_PATH
+
+export USERPROFILE=$HOME/win/home
+export APPDATA=$USERPROFILE/appdata/Roaming
+export APPDATALOCAL=$USERPROFILE/appdata/Local
