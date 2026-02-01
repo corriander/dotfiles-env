@@ -7,6 +7,7 @@
 #/usr/bin/keychain -q --nogui $HOME/.ssh/id_ed25519
 #. $HOME/.keychain/$HOST-sh
 
+export KOBOLD_BASE_URL="http://$(ip route | awk '/default/ {print $3; exit}'):5001/v1"
 
 # Manage SSH keys in windows password manager
 # Configure ssh forwarding
