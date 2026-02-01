@@ -1,10 +1,11 @@
 # Shell-agnostic profile / config for WSL
-#
+
+# NOTE: This is disabled; 1P is now running the ssh-agent in W11
 # Set up automatic keychain (native ssh-agent)
 # https://esc.sh/blog/ssh-agent-windows10-wsl2/
 #
-/usr/bin/keychain -q --nogui $HOME/.ssh/id_ed25519
-. $HOME/.keychain/$HOST-sh
+#/usr/bin/keychain -q --nogui $HOME/.ssh/id_ed25519
+#. $HOME/.keychain/$HOST-sh
 
 
 # Manage SSH keys in windows password manager
