@@ -13,3 +13,12 @@ function vim() {
 	# alias vim to nvim
 	nvim $*
 }
+
+
+function nv() {
+  if [ $# -eq 0 ]; then
+    nvim .
+  else
+    nvim $*
+  fi
+}
