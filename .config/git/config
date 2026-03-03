@@ -1,5 +1,25 @@
 [include]
     path = ~/.private/gitidentity
+
+# Machine-specific SSH config.
+# Discriminate by absolute path; all repos are in home dirs
+# 
+#   macOS  -> /Users/<user>/...
+#   WSL    -> /home/<user>/...  # note this isn't going to work for non-WSL but a bridge to cross later
+#   W11    -> C:/Users/<user>/...
+#
+# Crude, but works to stratify custom setup for now; will make more sophisticated
+# if required
+
+[includeIf "gitdir:/home/"]
+    path = ~/.private/gitssh.wsl
+
+#[includeIf "gitdir:/Users/"]
+#    path = ~/.private/gitssh.macos
+#
+#[includeIf "gitdir:C:/Users/"]
+#    path = ~/.private/gitssh.win
+
 [core]
     autocrlf = input
     safecrlf = true
@@ -41,3 +61,7 @@
 	defaultBranch = main
 [mergetool "vimdiff"]
 	path = /home/alex/app/nvim.appimage
+[lfs "customtransfer.xet"]
+	path = git-xet
+	args = transfer
+	concurrent = true
