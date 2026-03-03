@@ -93,7 +93,6 @@ zstyle ':omz:plugins:nvm' lazy yes
 plugins=(
     git
     vi-mode
-    poetry
     tmux
     tmuxinator
     gitignore
