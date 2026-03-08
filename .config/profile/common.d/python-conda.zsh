@@ -1,6 +1,11 @@
 . $FUNCPATH/rename_function.zsh
 . $FUNCPATH/fzf1.sh
 
+# If conda is not installed, skip the rest of the script
+if [ ! -f "$HOME/app/mambaforge/bin/conda" ]; then
+    return
+fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$($HOME/app/mambaforge/bin/conda 'shell.zsh' 'hook' 2>/dev/null)"
@@ -22,8 +27,8 @@ fi
 #
 
 # Introduce conda-wrapper to support activating the environment wtihin a subshell
-rename_function mamba _mamba
-rename_function conda _conda
+rename_function mamba _mamba 2>/dev/null
+rename_function conda _conda 2>/dev/null
 
 mamba () {
     _conda_wrapper $@
