@@ -35,7 +35,9 @@ export GPG_TTY=$(tty)
 # PATH
 # -----------------------------------------------------------------------------
 # Add homebrew to path
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 # --------------------------------------------------------------------
 # Platform-specific aliases
