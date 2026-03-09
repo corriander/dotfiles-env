@@ -6,16 +6,22 @@
 !.config
 !.config/autostart
 !.config/autostart/*
+
 !.config/conda
 !.config/conda/*
 !.config/jupyter
 !.config/jupyter/*
+.config/jupyter/migrated
+.config/jupyter/jupyter_server_config.json
+
 !.config/karabiner
 !.config/karabiner/*
+
 !.config/profile
 !.config/profile/*
 !.config/profile/common.d
 !.config/profile/common.d/*
+
 !.config/tmux
 !.config/tmux/*
 !.config/tmuxinator
@@ -43,6 +49,7 @@
 !.ipython/profile_default/ipython_config.py
 !.ipython/profile_default/startup
 !.ipython/profile_default/startup/*
+.ipython/profile_default/startup/*acds*.py
 
 !.local
 !.local/bin
