@@ -18,12 +18,11 @@ export ZSH="$HOME/.config/omz"
 eval "$(starship init zsh);init_result=$?"
 
 if [[ $init_result -eq 127 ]]; then
-	2>&1 echo "Warning: starship is not installed; installing..."
-	curl -sS https://starship.rs/install.sh | sh
+    echo 2>&1 "Warning: starship is not installed; installing..."
+    curl -sS https://starship.rs/install.sh | sh
 elif [[ $init_result -gt 0 ]]; then
-	2>&1 echo "Error: starship init failed"
+    echo 2>&1 "Error: starship init failed"
 fi
-
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -88,7 +87,7 @@ fi
 
 zstyle ':omz:plugins:nvm' lazy yes
 # Alternative:
-# zstyle ':omz:plugins:nvm' autoload yes
+#zstyle ':omz:plugins:nvm' autoload yes
 
 plugins=(
     git
