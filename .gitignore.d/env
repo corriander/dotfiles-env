@@ -9,6 +9,8 @@
 
 !.config/conda
 !.config/conda/*
+!.config/git
+!.config/git/*
 !.config/jupyter
 !.config/jupyter/*
 .config/jupyter/migrated
