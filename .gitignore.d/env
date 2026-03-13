@@ -24,11 +24,18 @@
 !.config/profile/common.d
 !.config/profile/common.d/*
 
+# oh-my-tmux takes control of tmux.conf; we use tmux.conf.local
 !.config/tmux
 !.config/tmux/*
+.config/tmux/tmux.conf
+
+!.config/tmux-powerline
+!.config/tmux-powerline/**
 !.config/tmuxinator
 !.config/tmuxinator/*
 .config/tmuxinator/*acds*
+!.config/tmux-powerline
+!.config/tmux-powerline/*
 !.config/wezterm
 !.config/wezterm/*
 .config/wezterm/*acds*
