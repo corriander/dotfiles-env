@@ -4,21 +4,14 @@ add_to_path /opt/homebrew/bin
 add_to_path $(brew --prefix)/opt/openjdk/bin
 add_to_path $(brew --prefix)/opt/gnu-sed/libexec/gnubin
 add_to_path $(brew --prefix)/opt/gnu-getopt/bin
-export EDITOR=/opt/homebrew/bin/nvim
+
+export NVIM_PATH=/opt/homebrew/bin/nvim
+export EDITOR=$NVIM_PATH
 
 # --------------------------------------------------------------------------------
 # Platform-specific aliases
 # --------------------------------------------------------------------------------
 function vim() {
-	# alias vim to nvim
-	nvim $*
-}
-
-
-function nv() {
-  if [ $# -eq 0 ]; then
-    nvim .
-  else
+    # alias vim to nvim
     nvim $*
-  fi
 }
