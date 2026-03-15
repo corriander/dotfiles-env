@@ -124,7 +124,7 @@ fi
 # shellcheck disable=SC1143,SC2128
 if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
 	TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
-		"tmux_session_info cyan black"
+		"tmux_session_info cyan white"
 		"hostname red white"
 		#"mode_indicator 165 0"
 		#"ifstat 30 255"
@@ -132,7 +132,7 @@ if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
 		"lan_ip blue black"
 		#"vpn 24 255 ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}"
 		"wan_ip brightblue black"
-		"uptime cyan black"
+		"uptime cyan white"
 		#"vcs_branch brightcyan black"
 		#"vcs_compare 60 255"
 	)
