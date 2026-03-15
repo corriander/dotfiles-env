@@ -26,8 +26,11 @@ add_to_path ${HOME}/.private/scripts            # sensitive scripts
 add_to_path ${HOME}/.scripts/3rd-party          # 3rd party scripts
 
 # Source platform-specific profile config
-. ${HOME}/.config/profile/$(detect_platform).sh
-. ${HOME}/.config/profile/$(detect_platform).$(detect_shell)
+platform=$(detect_platform)
+
+. ${HOME}/.config/profile/${platform}.sh
+. ${HOME}/.config/profile/${platform}.$(detect_shell)
+. ${HOME}/.config/profile/private/${platform}.sh 2>/dev/null
 
 # Source host-specific profile config if it exists
 if [ -f ${HOME}/.config/profile/host/$__hostname.$(detect_shell) ]; then
