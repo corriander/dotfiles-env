@@ -1,32 +1,5 @@
 # Shell-agnostic profile / config for WSL
 
-# NOTE: This is disabled; 1P is now running the ssh-agent in W11
-# Set up automatic keychain (native ssh-agent)
-# https://esc.sh/blog/ssh-agent-windows10-wsl2/
-#
-#/usr/bin/keychain -q --nogui $HOME/.ssh/id_ed25519
-#. $HOME/.keychain/$HOST-sh
-
-export KOBOLD_BASE_URL="http://$(ip route | awk '/default/ {print $3; exit}'):5001"
-
-# Manage SSH keys in windows password manager
-# Configure ssh forwarding
-#export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
-# need `ps -ww` to get non-truncated command for matching
-# use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
-#ALREADY_RUNNING=$(ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; echo $?)
-#if [[ $ALREADY_RUNNING != "0" ]]; then
-#    if [[ -S $SSH_AUTH_SOCK ]]; then
-#        # not expecting the socket to exist as the forwarding command isn't running (http://www.tldp.org/LDP/abs/html/fto.html)
-#        echo "removing previous socket..."
-#        rm $SSH_AUTH_SOCK
-#    fi
-#    echo "Starting SSH-Agent relay..."
-#    # setsid to force new session to keep running
-#    # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
-#    (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
-#fi
-
 # Ensure GPG key / pass combo is available as a backend to granted; this will
 # allow passphrase prompts when caching credentials.
 export GPG_TTY=$(tty)
