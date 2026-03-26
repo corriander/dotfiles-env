@@ -27,13 +27,19 @@
     excludesfile = ~/.config/git/ignore
     pager = less -x1,5
 [alias]
+    # actively used
     go = checkout
-    co = checkout
+    hist = log --pretty=format:'%C(auto)%h %ad |%d %s [%an]' --graph --date=short
+
+    # incubation/trial
+    ls-branch = !git --no-pager diff --name-status "$(git merge-base HEAD main)" HEAD
+
+    # rarely used
+    co = commit
     ci = commit
     st = status
     br = branch
     cp = cherry-pick -x
-    hist = log --pretty=format:'%C(auto)%h %ad |%d %s [%an]' --graph --date=short
     type = cat-file -t
     dump = cat-file -p
     uncommit = reset --soft HEAD^1
