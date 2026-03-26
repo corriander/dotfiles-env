@@ -26,7 +26,7 @@ add_to_path ${HOME}/.private/scripts            # sensitive scripts
 add_to_path ${HOME}/.scripts/3rd-party          # 3rd party scripts
 
 # Source platform-specific profile config
-platform=$(detect_platform)
+# platform=$(detect_platform)  # set in .zshenv now
 
 . ${HOME}/.config/profile/${platform}.sh
 . ${HOME}/.config/profile/${platform}.$(detect_shell)

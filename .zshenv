@@ -4,26 +4,20 @@ skip_global_compinit=1
 
 case "$OSTYPE" in
   darwin*)
-    export PLATFORM_OS=macos
-    export PLATFORM_KIND=macos
+    platform=macos
     ;;
   linux*)
-    export PLATFORM_OS=linux
     if [[ -n "$WSL_DISTRO_NAME" || -n "$WSL_INTEROP" ]]; then
-      # cheap
-      export PLATFORM_KIND=wsl
+      platform=wsl
     elif [[ -r /proc/sys/kernel/osrelease ]] && grep -qi microsoft /proc/sys/kernel/osrelease; then
-      # less cheap
-      export PLATFORM_KIND=wsl
+      platform=wsl
     elif [[ -r /proc/version ]] && grep -qi microsoft /proc/version; then
-      # even less cheap
-      export PLATFORM_KIND=wsl
+      platform=wsl
     else
-      export PLATFORM_KIND=linux
+      platform=linux
     fi
     ;;
   *)
-    export PLATFORM_OS=unknown
-    export PLATFORM_KIND=unknown
+    platform=unknown
     ;;
 esac
