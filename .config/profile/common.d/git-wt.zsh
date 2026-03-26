@@ -1,124 +1,12 @@
 git-wt() {
-  # Create or switch to a git worktree for the specified branch
-  #
-  # Supports distinct worktree directories for different branches, with parallel
-  # work supported
-  #
-  # Usage:
-  #   git-wt <branch>
-  #
-  # If the branch exists, it will be checked out in a new worktree.
-  # If it doesn't exist, it will be created and checked out.
-  local branch="$1"
-  local base="${GIT_WT_BASE:-../wt}"
-
-  if [ -z "$branch" ]; then
-    echo "usage: git-wt <branch>"
-    return 1
-  fi
-
-  local root
-  root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
-    echo "not inside a git repository"
-    return 1
-  }
-
-  local name="${branch//\//-}"
-  local wt_dir="$base/$name"
-
-  mkdir -p "$base"
-
-  if [ -e "$wt_dir/.git" ]; then
-    cd "$wt_dir" || return 1
-    return 0
-  fi
-
-  if git -C "$root" show-ref --verify --quiet "refs/heads/$branch"; then
-    git -C "$root" worktree add "$wt_dir" "$branch" || return 1
-  else
-    git -C "$root" worktree add "$wt_dir" -b "$branch" || return 1
-  fi
-
-  cd "$wt_dir" || return 1
+  local target
+  target="$(command git-wt "$@")" || return 1
+  [ -n "$target" ] || return 0
+  cd "$target" || return 1
 }
 
-
 git-wt-clean() {
-  # Delete git worktree and, optionally, the branch
-  local branch=""
-  local delete_branch=0
-  local force=0
-  local base="${GIT_WT_BASE:-../wt}"
-
-  while [ "$#" -gt 0 ]; do
-    case "$1" in
-      -f|--force)
-        force=1
-        ;;
-      --delete-branch)
-        delete_branch=1
-        ;;
-      -h|--help)
-        echo "usage: git-wt-clean [-f|--force] <branch> [--delete-branch]"
-        return 0
-        ;;
-      -*)
-        echo "unknown option: $1"
-        echo "usage: git-wt-clean [-f|--force] <branch> [--delete-branch]"
-        return 1
-        ;;
-      *)
-        if [ -n "$branch" ]; then
-          echo "usage: git-wt-clean [-f|--force] <branch> [--delete-branch]"
-          return 1
-        fi
-        branch="$1"
-        ;;
-    esac
-    shift
-  done
-
-  if [ -z "$branch" ]; then
-    echo "usage: git-wt-clean [-f|--force] <branch> [--delete-branch]"
-    return 1
-  fi
-
-  local root
-  root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
-    echo "not inside a git repository"
-    return 1
-  }
-
-  local name="${branch//\//-}"
-  local wt_dir="$base/$name"
-
-  # Remove worktree if it exists
-  if [ -d "$wt_dir" ]; then
-    # Refuse to remove when currently inside the target worktree (or a subdir).
-    local cwd_abs
-    local wt_abs
-    cwd_abs="$(pwd -P)"
-    wt_abs="$(cd "$wt_dir" 2>/dev/null && pwd -P)" || return 1
-    if [ "$cwd_abs" = "$wt_abs" ] || [[ "$cwd_abs" == "$wt_abs/"* ]]; then
-      echo "currently inside target worktree: $wt_dir"
-      echo "cd elsewhere and rerun"
-      return 1
-    fi
-
-    if [ "$force" -eq 1 ]; then
-      git -C "$root" worktree remove --force "$wt_dir" || return 1
-    else
-      git -C "$root" worktree remove "$wt_dir" || return 1
-    fi
-    git -C "$root" worktree prune
-  else
-    echo "worktree not found: $wt_dir"
-  fi
-
-  # Optional branch delete (safe delete only)
-  if [ "$delete_branch" -eq 1 ]; then
-    git -C "$root" branch -d "$branch" || return 1
-  fi
+  command git-wt clean "$@"
 }
 
 _git_wt_branch_names() {
@@ -178,4 +66,4 @@ if [[ -o interactive ]]; then
   fi
 fi
 
-export GIT_WT_BASE="$HOME/repos/worktrees"
+export GIT_WORKTREE_ROOT="${GIT_WORKTREE_ROOT:-$HOME/repos/wt}"

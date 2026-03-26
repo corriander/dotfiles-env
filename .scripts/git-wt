@@ -1,0 +1,191 @@
+#!/bin/sh
+
+set -eu
+
+usage() {
+  cat <<'EOF'
+usage:
+  git-wt <branch>
+  git-wt clean [-f|--force] <branch> [--delete-branch]
+
+Creates or reuses a worktree for <branch> and prints its path.
+`clean` removes the matching worktree and can optionally delete the branch.
+EOF
+}
+
+die() {
+  echo "$*" >&2
+  exit 1
+}
+
+git_root() {
+  git rev-parse --show-toplevel 2>/dev/null || die "not inside a git repository"
+}
+
+safe_branch_name() {
+  printf '%s\n' "$1" | tr '/' '-'
+}
+
+repo_name() {
+  basename "$1"
+}
+
+canonical_dir() {
+  cd "$1" 2>/dev/null && pwd -P
+}
+
+worktree_root() {
+  printf '%s\n' "${GIT_WORKTREE_ROOT:-$HOME/repos/wt}"
+}
+
+legacy_worktree_root() {
+  printf '%s\n' "${GIT_WORKTREE_LEGACY_ROOT:-$HOME/repos/worktrees}"
+}
+
+branch_worktree_path() {
+  root="$1"
+  branch="$2"
+  git -C "$root" worktree list --porcelain 2>/dev/null | awk -v target="refs/heads/$branch" '
+    /^worktree / { path = substr($0, 10); next }
+    /^branch / && $2 == target { print path; exit }
+  '
+}
+
+new_worktree_path() {
+  root="$1"
+  branch="$2"
+  repo="$(repo_name "$root")"
+  safe_branch="$(safe_branch_name "$branch")"
+  printf '%s/%s/%s\n' "$(worktree_root)" "$repo" "$safe_branch"
+}
+
+legacy_worktree_path() {
+  branch="$1"
+  safe_branch="$(safe_branch_name "$branch")"
+  printf '%s/%s\n' "$(legacy_worktree_root)" "$safe_branch"
+}
+
+resolve_worktree_path() {
+  root="$1"
+  branch="$2"
+
+  existing="$(branch_worktree_path "$root" "$branch")"
+  if [ -n "$existing" ]; then
+    printf '%s\n' "$existing"
+    return 0
+  fi
+
+  legacy_path="$(legacy_worktree_path "$branch")"
+  if [ -d "$legacy_path" ] && [ ! -d "$(new_worktree_path "$root" "$branch")" ]; then
+    printf '%s\n' "$legacy_path"
+    return 0
+  fi
+
+  new_worktree_path "$root" "$branch"
+}
+
+ensure_branch_worktree() {
+  branch="$1"
+  root="$(git_root)"
+  wt_dir="$(resolve_worktree_path "$root" "$branch")"
+
+  existing="$(branch_worktree_path "$root" "$branch")"
+  if [ -n "$existing" ]; then
+    printf '%s\n' "$(canonical_dir "$existing")"
+    return 0
+  fi
+
+  parent_dir="$(dirname "$wt_dir")"
+  mkdir -p "$parent_dir"
+
+  if git -C "$root" show-ref --verify --quiet "refs/heads/$branch"; then
+    git -C "$root" worktree add --quiet "$wt_dir" "$branch"
+  else
+    git -C "$root" worktree add --quiet "$wt_dir" -b "$branch"
+  fi
+
+  printf '%s\n' "$(canonical_dir "$wt_dir")"
+}
+
+clean_branch_worktree() {
+  branch=""
+  delete_branch=0
+  force=0
+
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      -f|--force)
+        force=1
+        ;;
+      --delete-branch)
+        delete_branch=1
+        ;;
+      -h|--help)
+        usage
+        return 0
+        ;;
+      -*)
+        die "unknown option: $1"
+        ;;
+      *)
+        if [ -n "$branch" ]; then
+          die "usage: git-wt clean [-f|--force] <branch> [--delete-branch]"
+        fi
+        branch="$1"
+        ;;
+    esac
+    shift
+  done
+
+  [ -n "$branch" ] || die "usage: git-wt clean [-f|--force] <branch> [--delete-branch]"
+
+  root="$(git_root)"
+  wt_dir="$(resolve_worktree_path "$root" "$branch")"
+
+  if [ -d "$wt_dir" ]; then
+    cwd_abs="$(pwd -P)"
+    wt_abs="$(canonical_dir "$wt_dir")" || die "unable to resolve worktree path: $wt_dir"
+    case "$cwd_abs" in
+      "$wt_abs"|"$wt_abs"/*)
+        die "currently inside target worktree: $wt_dir
+cd elsewhere and rerun"
+        ;;
+    esac
+
+    if [ "$force" -eq 1 ]; then
+      git -C "$root" worktree remove --force "$wt_dir"
+    else
+      git -C "$root" worktree remove "$wt_dir"
+    fi
+    git -C "$root" worktree prune
+  else
+    echo "worktree not found: $wt_dir" >&2
+  fi
+
+  if [ "$delete_branch" -eq 1 ]; then
+    git -C "$root" branch -d "$branch"
+  fi
+}
+
+main() {
+  [ "$#" -gt 0 ] || {
+    usage
+    exit 1
+  }
+
+  case "$1" in
+    -h|--help)
+      usage
+      ;;
+    clean)
+      shift
+      clean_branch_worktree "$@"
+      ;;
+    *)
+      [ "$#" -eq 1 ] || die "usage: git-wt <branch>"
+      ensure_branch_worktree "$1"
+      ;;
+  esac
+}
+
+main "$@"
