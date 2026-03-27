@@ -100,6 +100,13 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+for f in ${HOME}/.config/profile/post.d/*.sh(N); do
+    . $f
+done
+for f in ${HOME}/.config/profile/post.d/*.$(detect_shell)(N); do
+    . $f
+done
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
