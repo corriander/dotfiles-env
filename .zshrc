@@ -5,7 +5,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Source profile customisations early so all paths are present etc.
-. ~/.config/profile/common
+. ~/.config/profile/common.sh
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.config/omz"

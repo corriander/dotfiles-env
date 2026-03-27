@@ -1,3 +1,4 @@
+# !/usr/bin/env bash
 # Platform and shell agnostic profile configuration
 #
 # ------------------------------------------------------------------
