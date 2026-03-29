@@ -23,6 +23,8 @@
 !.config/profile/*
 !.config/profile/common.d
 !.config/profile/common.d/*
+!.config/profile/post.d
+!.config/profile/post.d/*
 
 # oh-my-tmux takes control of tmux.conf; we use tmux.conf.local
 !.config/tmux
