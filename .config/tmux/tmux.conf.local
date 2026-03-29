@@ -456,12 +456,15 @@ set-option -g focus-events on
 set -g default-terminal "tmux-256color"
 set-option -sa terminal-features ',xterm-256color:RGB'
 
-
 # Vim-style copy paste
 bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
 bind-key -T copy-mode-vi 'y' send-keys -X copy-selection-and-cancel
 bind-key p paste-buffer
 
+# NOTE: we have platform detection in .zshenv but we only export PLATFORM_* later
+# in shell profile load path. It's more robust to just check platform here and the
+# cost is negligible as this file is only loaded once per tmux session/reload.
+if-shell 'grep -qi microsoft /proc/version' 'source ~/.config/tmux/tmux.wsl.conf'
 if-shell 'test "$(uname)" = "Darwin"' 'source ~/.config/tmux/tmux.macos.conf'
 
 
@@ -512,7 +515,6 @@ set -g @continuum-restore 'on'
 set -g @resurrect-hook-post-save-layout '$HOME/.config/tmux/scripts/fix-resurrect-save-paths.sh'
 
 set -g @plugin 'jaclu/tmux-menus'
-set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'erikw/tmux-powerline'
 
 
