@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+is_wsl() {
+  [[ -n "${WSL_DISTRO_NAME:-}" || -n "${WSL_INTEROP:-}" ]] && return 0
+  [[ -r /proc/sys/kernel/osrelease ]] && grep -qi microsoft /proc/sys/kernel/osrelease
+}
+
+if ! is_wsl; then
+  echo "fix-wsl-interop: not running under WSL" >&2
+  exit 1
+fi
+
+cmd_path=/mnt/c/Windows/System32/cmd.exe
+
+restart_binfmt() {
+  if [[ ${EUID:-$(id -u)} -eq 0 ]]; then
+    systemctl restart systemd-binfmt
+    return
+  fi
+
+  if ! command -v sudo >/dev/null 2>&1; then
+    echo "fix-wsl-interop: need root or sudo to restart systemd-binfmt" >&2
+    exit 1
+  fi
+
+  sudo systemctl restart systemd-binfmt
+}
+
+if [[ ! -x "$cmd_path" ]]; then
+  echo "fix-wsl-interop: $cmd_path not found" >&2
+  exit 1
+fi
+
+if "$cmd_path" /c exit >/dev/null 2>&1; then
+  echo "WSL interop already working"
+  exit 0
+fi
+
+echo "Restarting systemd-binfmt to restore WSL interop..."
+restart_binfmt
+
+if "$cmd_path" /c exit >/dev/null 2>&1; then
+  echo "WSL interop restored"
+  exit 0
+fi
+
+echo "WSL interop is still broken after restarting systemd-binfmt" >&2
+echo "Next check: journalctl -u systemd-binfmt -n 50 --no-pager" >&2
+exit 1
