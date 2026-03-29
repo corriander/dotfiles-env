@@ -506,6 +506,10 @@ tmux_conf_uninstall_plugins_on_reload=true
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
+# Some long-running CLIs leave tmux reporting pane_current_path as $HOME while
+# the pane title still points at the repo. Repair the saved resurrect snapshot
+# so restore uses the repo path for those panes.
+set -g @resurrect-hook-post-save-layout '$HOME/.config/tmux/scripts/fix-resurrect-save-paths.sh'
 
 set -g @plugin 'jaclu/tmux-menus'
 set -g @plugin 'tmux-plugins/tmux-yank'
