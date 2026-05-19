@@ -48,6 +48,8 @@ nv() {
 	fi
 }
 
+alias uvr='uv run --frozen'
+
 case $HOSTNAME in
 	$HOST_DESKTOP )
 		alias vim='TERM=gnome-256color vim' # Gnome, right?
