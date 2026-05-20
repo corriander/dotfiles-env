@@ -1,14 +1,23 @@
 ---
 name: system-model
 description: Grilling session that frames the system under discussion, stress-tests a plan against its boundaries and language, and updates documentation (CONTEXT.md, ADRs) inline as decisions crystallise. Use when user wants to stress-test a plan against their project's system model, interfaces, and documented decisions.
+argument-hint: "optional free-form steering — system in focus, subsystem path, plan summary, or specific angle to stress-test"
 disable-model-invocation: true
 ---
+
+<what-to-do>
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 
 Ask questions one at a time, waiting for feedback on each question before continuing.
 
 If a question can be answered by exploring the codebase, explore the codebase instead.
+
+If the user passed arguments, treat them as free-form steering (the system in focus, a subsystem path, a plan summary, or a specific angle to stress-test). Bias the framing and first questions accordingly; don't force them into a schema.
+
+</what-to-do>
+
+<supporting-info>
 
 ## What CONTEXT.md is for
 
@@ -21,6 +30,12 @@ This skill combines:
 - DDD-style language discipline, to keep terms precise and local to the system being discussed
 
 Use `CONTEXT.md` to capture the system model and its language. Do not use it as general project memory, a design spec, a task list, or agent instructions.
+
+Keep technical detail when it clarifies the system boundary, environment, interfaces, assumptions, decomposition, or local language.
+
+Do not let `CONTEXT.md` accrete volatile detail such as exhaustive field inventories, exact function signatures, config knobs, env vars, entry-point group names, endpoint catalogues, migration notes, code-path narration, or rollout history. Put those in code, specs, ADRs, or runbooks instead.
+
+Smell check: if the fact would likely change during routine implementation without changing the system model, it probably does not belong in `CONTEXT.md`.
 
 ## Frame the system first
 
@@ -97,6 +112,8 @@ When the user states how something works, check whether the code agrees. If you 
 
 When the frame crystallises or a term is resolved, update `CONTEXT.md` right there. Do not batch the updates. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
 
+When updating, prefer durable statements over transient ones. Keep the model useful to a future reader after ordinary implementation churn.
+
 ### Views versus nested CONTEXT.md
 
 Use a **View** when the boundary stays the same but the perspective changes, for example runtime, deployment, data, or failure modes.
@@ -114,3 +131,5 @@ Only offer to create an ADR when all three are true:
 If any of the three is missing, skip the ADR.
 
 For ADR format, read `~/notes/superuser/adr.md` and follow it even when it differs from conventions you might know. If that file is not accessible on this machine, stop and tell the user before drafting an ADR rather than guessing.
+
+</supporting-info>

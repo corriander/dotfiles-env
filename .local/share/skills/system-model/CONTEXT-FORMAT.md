@@ -63,8 +63,11 @@ _Avoid_: <ambiguous or overloaded alternatives>
 - Use a nested `CONTEXT.md` when a subsystem needs its own boundary, interfaces, assumptions, and language.
 - Use `Views` when the boundary stays the same but the perspective changes.
 - `Interfaces` should include the guarantees that matter: direction, protocol, delivery semantics, ordering, idempotency, auth, or similar.
+- Keep technical detail when it helps explain boundary, interfaces, assumptions, decomposition, or terminology.
+- Exclude volatile detail such as exhaustive field lists, exact function signatures, config keys, env vars, file paths, migration history, rollout sequencing, or code-path narration better kept in code, specs, ADRs, or runbooks.
 - `Language` is local to this system. Define terms that matter here; omit general software concepts.
 - Keep definitions tight. Define what a thing is, not everything it does.
 - If multiple words exist for the same concept, pick one canonical term and mark the others to avoid.
 - `C4 Orientation` is optional. If used, scope it to the current frame.
 - `CONTEXT.md` is not a decision log, ticket, status report, runbook, or agent notebook. Put decisions in ADRs.
+- Smell check: if a fact would likely change during routine implementation without changing the system model, it probably does not belong here.
