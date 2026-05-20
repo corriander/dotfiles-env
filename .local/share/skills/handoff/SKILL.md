@@ -4,9 +4,11 @@ description: Wrap a session into a mempalace diary entry (and drawer promotion w
 argument-hint: "optional free-form steering — topic hint, project slug, next direction, anything to bias the handoff"
 ---
 
-Persist the current session to mempalace so a fresh agent can resume it without ceremony. Diary is the chronicle (where we got to); drawers are the canon (decisions that outlive the session). No `HANDOFF.md` files — mempalace is the substrate.
+Persist the current session to mempalace so a fresh agent can resume it without ceremony and without markdown artefacts. Use the diary to chronicle (where we got to) and update or add drawers with canon.
 
 If the user passed arguments, treat them as free-form steering (a topic hint, a focus area, a direction for the next session). Bias the entry accordingly; don't force them into a schema.
+
+Orientate yourself with the `/atlas` skill if you haven't already - it provides context about information stores we use, including mempalace pointers.
 
 ## Process
 
@@ -27,18 +29,24 @@ If you have *no* picture of the session state (e.g. compaction wiped it), explor
 ### 3. Hygiene check
 
 Before writing, ask yourself explicitly: **is anything load-bearing only-local?**
-- Unpushed commits on a branch the user might reap
-- Uncommitted edits in a worktree scheduled for cleanup
-- Single-copy notes files that will die with the worktree
 
-If yes, flag it in the entry *and* surface it to the user before they close down — this is the highest-value bit and it's easy to miss.
+- Unpushed commits
+- Uncommitted changes
+- Untracked files (e.g. working notes) within a worktree
 
-### 4. Write to mempalace atomically
+If yes, flag it in the entry *and* surface it prominently to the user before they close down - this is high value and easy to overlook.
+No need to explain the nature of destructive git actions, the user probably knows, but better to point out work at risk than not.
 
-Use `mempalace_diary_write` with `agent_name="claude"` and a topic that matches the work (project slug, e.g. `asm`, or finer like `asm/admin-auth`). Match the AAAK-style format of existing diary entries — run `mempalace_diary_read last_n=3` first if you're unsure of the house style. Use a star rating (★/★★/★★★) reflecting significance.
+### 4. Write the diary entry
 
-The entry should cover, tersely:
-- Header line: `SESSION:YYYY-MM-DD|<wing>|<topic>.<headline>` with stars
+Use `mempalace_diary_write` with:
+- `agent_name="claude"`
+- `wing="<project>"` — the project slug (e.g. `asm`). **Required for routing** — omit it and the entry lands in `wing_claude` which is for your own memories.
+- `topic` — finer-grained slug under the project (e.g. `admin-auth`).
+
+Defer to `/atlas` (and mempalace's own tools/docs it points to) for AAAK format and palace conventions.
+
+The handoff-specific content should cover, tersely:
 - What landed — commits (SHAs), PRs (numbers + state), decisions made
 - Stack/branch state at sign-off (open PRs, draft vs ready, mergeability)
 - Resume plan — explicit first action for next-session-self, with file:line where known
@@ -48,7 +56,7 @@ The entry should cover, tersely:
 
 ### 5. Promote canon if warranted
 
-If the session produced a durable decision-with-rationale (architecture choice, "tried X picked Y", an invariant that constrains future work), update or create the relevant drawer in the same step. Don't duplicate things already captured in committed docs (`docs/`, ADRs, etc.) — link by path instead.
+If the session produced a durable decision-with-rationale (architecture choice, "tried X picked Y", an invariant that constrains future work), or concepts or ideas of note, update or create the relevant drawer in the same turn. Don't duplicate things already captured in committed docs (`docs/`, ADRs, etc.) — link by path instead.
 
 ### 6. Report back
 
