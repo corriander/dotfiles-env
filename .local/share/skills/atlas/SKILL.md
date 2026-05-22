@@ -1,6 +1,6 @@
 ---
 name: atlas
-description: Map of where durable information lives across stores (mempalace, auto-memory, obsidian notes, project docs/ADRs/CONTEXT.md) and the bespoke conventions on top. Use when persisting or recalling.
+description: Map of where durable information lives across stores (mempalace, auto-memory, obsidian notes, project docs/ADRs/CONTEXT.md) and the bespoke conventions on top. Consult BEFORE using mempalace, filing a memory, or creating a documentation artefact to orientate yourself and align to conventions.
 ---
 
 Where durable information tends to live, and how to access it.
@@ -8,11 +8,19 @@ Where durable information tends to live, and how to access it.
 ## Stores
 
 - **Project docs** — `<repo>/docs/`
-- **Module CONTEXT.md** — `<repo>/**/CONTEXT.md`; author at module entry points before non-trivial work, self-reference ADRs
-- **ADRs** — `<repo>/docs/adr/` (single bucket); spec at `~/notes/superuser/adr.md`
-- **Auto-memory** (per-project, durable) — `~/.claude/projects/<slug>/memory/`, indexed by `MEMORY.md`
+- **Module CONTEXT.md** — `<repo>/**/CONTEXT.md`; author at module entry points via user-initiated `/system-model` skill before non-trivial work, self-reference ADRs
+- **ADRs** — `<repo>/docs/adr/` (single bucket); per-repo conventions in that directory's `README.md` where it exists override similar specs in `~/notes/superuser/adr.md`
 - **Personal notes** — `~/notes/<notebook>/`, Obsidian-flavoured md with its own backlink graph. Author only on request via `notes-authoring-agent`. Read/edit via `obsidian-cli` / `obsidian-markdown` / `obsidian-bases`.
-- **MemPalace** — MCP `mempalace_*`. Cross-project, cross-session.
+- **Auto-memory** - Use your own memory tooling freely to supplement mempalace and aid discovery
+- **MemPalace** — MCP `mempalace_*`. Cross-project, cross-session, even cross-tool and agent memories - supplements auto-memory
+
+## Referencing
+
+Only docs committed to repo (general, CONTEXT.md or ADRs) are referencable in docstrings, comments, PRs, Issues, Slack etc.
+ADRs may be referenced in docstrings, other documentation should not be - assume the code is authoritative.
+Personal notes and memory are ephemeral and generally considered not referencable.
+
+Cross referencing between memories is fine! Personal notes and memory content may *inform* other content but take care with verbatim quotes.
 
 ## MemPalace — defer to its own tools first
 
@@ -38,7 +46,7 @@ Two graph layers exist — mempalace KG (structured claims) and Obsidian backlin
 - `/recall` — load a prior session handoff (diary + linked drawers)
 - `/handoff` — write a session handoff; promote durable bits to drawers
 - `notes-authoring-agent` — `~/notes/`, on request only
-- Auto-memory writes — per `~/.claude/CLAUDE.md`
+- Auto-memory writes — e.g. per `~/.claude/CLAUDE.md`
 
 ## Recording new patterns
 
