@@ -25,3 +25,5 @@ _patch_omz_nvm_lazy_wrappers() {
 
 _patch_omz_nvm_lazy_wrappers
 unfunction _patch_omz_nvm_lazy_wrappers
+
+add_to_path $(dirname $MY_NODE_DEFAULT) # common.d MY_NODE_DEFAULT

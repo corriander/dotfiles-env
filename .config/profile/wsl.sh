@@ -9,7 +9,10 @@ export GPG_TTY=$(tty)
 # -----------------------------------------------------------------------------
 # Add homebrew to path
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  case ":$PATH:" in
+    *":/home/linuxbrew/.linuxbrew/bin:"*) ;;
+    *) eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
+  esac
 fi
 
 # --------------------------------------------------------------------

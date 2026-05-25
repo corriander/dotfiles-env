@@ -37,5 +37,3 @@ _get_default_node() {
 }
 
 export MY_NODE_DEFAULT=$(_get_default_node)
-
-add_to_path $(dirname $MY_NODE_DEFAULT) after
