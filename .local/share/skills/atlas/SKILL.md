@@ -8,7 +8,7 @@ Where durable information tends to live, and how to access it.
 ## Stores
 
 - **Project docs** — `<repo>/docs/`
-- **Module CONTEXT.md** — `<repo>/**/CONTEXT.md`; author at module entry points via user-initiated `/system-model` skill before non-trivial work, self-reference ADRs
+- **System CONTEXT.md files** — `<repo>/**/CONTEXT.md` are important local context for the project. Simple projects may have one at the repo root, others may be decomposed into nested context files for significant parts. Author at entry points via user-initiated `/system-model` skill before non-trivial work, self-reference ADRs
 - **ADRs** — `<repo>/docs/adr/` (single bucket); per-repo conventions in that directory's `README.md` where it exists override similar specs in `~/notes/superuser/adr.md`
 - **Personal notes** — `~/notes/<notebook>/`, Obsidian-flavoured md with its own backlink graph. Author only on request via `notes-authoring-agent`. Read/edit via `obsidian-cli` / `obsidian-markdown` / `obsidian-bases`.
 - **Auto-memory** - Use your own memory tooling freely to supplement mempalace and aid discovery
