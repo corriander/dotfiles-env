@@ -14,6 +14,16 @@ Where durable information tends to live, and how to access it.
 - **Auto-memory** - Use your own memory tooling freely to supplement mempalace and aid discovery
 - **MemPalace** — MCP `mempalace_*`. Cross-project, cross-session, even cross-tool and agent memories - supplements auto-memory
 
+## Host map (WSL ↔ Windows)
+
+One machine, two environments. WSL is the source of truth; Windows agents (Claude Desktop, Codex, Claude Code) attach to it. Paths above are WSL; equivalents:
+
+- **MemPalace** — *one shared store*. WSL launches it stdio from `~/.mempalace`; Windows agents spawn the *same* binary against the *same* store via `wsl.exe` (`-d ubuntu-25.10 -e … -m mempalace.mcp_server`). Host-agnostic — `/handoff` and `/recall` behave identically either side.
+- **Personal notes** — *one vault*. `~/notes` is a symlink resolving to `C:\Users\alexj\notes`, so WSL and Windows see the same Obsidian vault.
+- **Skills** — `~/.local/share/skills` is canonical; `sync.sh` symlinks them on WSL and copies them into the Windows `…\.{claude,codex}\skills` dirs (one-way; re-run after edits).
+- **Auto-memory** — *separate per host*: `~/.claude/projects/<p>/memory/` (WSL) vs `C:\Users\alexj\.claude\projects\<p>\memory\` (Windows). Not unified.
+- **Repo docs / ADRs / CONTEXT.md** — repo-relative; identical from either host.
+
 ## Referencing
 
 Only docs committed to repo (general, CONTEXT.md or ADRs) are referencable in docstrings, comments, PRs, Issues, Slack etc.

@@ -4,19 +4,35 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-TARGET_DIRS=(
+# WSL consumers: symlink (same filesystem, edits propagate live).
+LINK_TARGETS=(
   "$HOME/.claude/skills"
   "$HOME/.codex/skills"
+)
+
+# Windows consumers: copy. NTFS over /mnt can't take the unix symlinks the
+# Windows apps follow, so we mirror one-way (WSL -> Windows). Re-run after
+# editing a skill in WSL to push the change. The Windows .claude/skills dir is
+# shared by both Claude Desktop and the Claude Code CLI. Override WIN_USER if
+# the Windows account name differs from the default.
+WIN_USER="${WIN_USER:-alexj}"
+WIN_BASE="/mnt/c/Users/$WIN_USER"
+COPY_TARGETS=(
+  "$WIN_BASE/.claude/skills"
+  "$WIN_BASE/.codex/skills"
 )
 
 status=0
 skills=()
 
+# Discover skills: top-level dirs only, excluding hidden dirs like .claude
+# (tracked settings, not a skill) so only real skills are distributed.
 while IFS= read -r skill_dir; do
   skills+=("$(basename "$skill_dir")")
-done < <(find "$ROOT_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
+done < <(find "$ROOT_DIR" -mindepth 1 -maxdepth 1 -type d -not -name '.*' | sort)
 
-for target_dir in "${TARGET_DIRS[@]}"; do
+# --- WSL: symlink into consumer skill dirs ---
+for target_dir in "${LINK_TARGETS[@]}"; do
   if [[ ! -d "$target_dir" ]]; then
     printf 'missing consumer skills dir: %s\n' "$target_dir" >&2
     status=1
@@ -46,6 +62,30 @@ for target_dir in "${TARGET_DIRS[@]}"; do
 
     ln -s "$source_dir" "$target_path"
     printf 'linked: %s -> %s\n' "$target_path" "$source_dir"
+  done
+done
+
+# --- Windows: copy into consumer skill dirs (skip cleanly if not mounted) ---
+for target_dir in "${COPY_TARGETS[@]}"; do
+  parent_dir="$(dirname "$target_dir")"
+  if [[ ! -d "$parent_dir" ]]; then
+    printf 'skip (no Windows consumer mounted): %s\n' "$parent_dir"
+    continue
+  fi
+
+  mkdir -p "$target_dir"
+
+  for skill in "${skills[@]}"; do
+    source_dir="$ROOT_DIR/$skill"
+    target_path="$target_dir/$skill"
+
+    if command -v rsync >/dev/null 2>&1; then
+      rsync -a --delete "$source_dir/" "$target_path/"
+    else
+      rm -rf "$target_path"
+      cp -r "$source_dir" "$target_path"
+    fi
+    printf 'copied: %s -> %s\n' "$target_path" "$source_dir"
   done
 done
 
