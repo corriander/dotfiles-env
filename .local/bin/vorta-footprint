@@ -1,0 +1,327 @@
+#!/usr/bin/python3
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import shutil
+import sqlite3
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+
+DEFAULT_DB_PATH = Path.home() / ".local/share/Vorta/settings.db"
+DEFAULT_NCDU_EXCLUDES_DIR = Path.home() / ".cache" / "vorta-footprint"
+
+
+@dataclass(frozen=True)
+class ExcludeRule:
+    pattern: str
+    source: str
+    label: str
+
+
+@dataclass(frozen=True)
+class Profile:
+    profile_id: int
+    name: str
+    source_paths: list[Path]
+    exclude_rules: list[ExcludeRule]
+    exclude_if_present: list[str]
+
+
+def iter_clean_lines(text: str | None) -> list[str]:
+    if not text:
+        return []
+    lines: list[str] = []
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        lines.append(line)
+    return lines
+
+
+def find_vorta_preset_dir() -> Path:
+    import importlib.util
+
+    spec = importlib.util.find_spec("vorta")
+    if spec is None or spec.origin is None:
+        raise SystemExit("Could not locate the installed Vorta package.")
+    package_dir = Path(spec.origin).resolve().parent
+    preset_dir = package_dir / "assets" / "exclusion_presets"
+    if not preset_dir.is_dir():
+        raise SystemExit(f"Could not locate Vorta preset directory at {preset_dir}.")
+    return preset_dir
+
+
+def load_vorta_presets() -> dict[str, dict[str, object]]:
+    preset_dir = find_vorta_preset_dir()
+    os_tag = f"os:{sys.platform}"
+    presets: dict[str, dict[str, object]] = {}
+    for preset_file in sorted(preset_dir.glob("*.json")):
+        with preset_file.open("r", encoding="utf-8") as handle:
+            for preset in json.load(handle):
+                if os_tag in preset["tags"]:
+                    presets[preset["slug"]] = preset
+    return presets
+
+
+def load_profile(db_path: Path, profile_name: str) -> Profile:
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    try:
+        profile_row = conn.execute(
+            """
+            select id, name, exclude_patterns, exclude_if_present
+            from backupprofilemodel
+            where name = ?
+            """,
+            (profile_name,),
+        ).fetchone()
+        if profile_row is None:
+            raise SystemExit(f"Profile {profile_name!r} was not found in {db_path}.")
+
+        source_rows = conn.execute(
+            """
+            select dir
+            from sourcedirmodel
+            where profile_id = ?
+            order by id
+            """,
+            (profile_row["id"],),
+        ).fetchall()
+
+        exclusion_rows = conn.execute(
+            """
+            select source, name
+            from exclusionmodel
+            where profile_id = ? and enabled = 1
+            order by id
+            """,
+            (profile_row["id"],),
+        ).fetchall()
+    finally:
+        conn.close()
+
+    presets = load_vorta_presets()
+    exclude_rules: list[ExcludeRule] = []
+
+    for row in exclusion_rows:
+        if row["source"] == "custom":
+            exclude_rules.append(
+                ExcludeRule(
+                    pattern=os.path.expanduser(row["name"].strip()),
+                    source="custom",
+                    label=row["name"].strip(),
+                )
+            )
+
+    for pattern in iter_clean_lines(profile_row["exclude_patterns"]):
+        exclude_rules.append(
+            ExcludeRule(
+                pattern=os.path.expanduser(pattern),
+                source="raw",
+                label=pattern,
+            )
+        )
+
+    for row in exclusion_rows:
+        if row["source"] != "preset":
+            continue
+        preset = presets.get(row["name"])
+        if preset is None:
+            continue
+        for pattern in preset["patterns"]:
+            exclude_rules.append(
+                ExcludeRule(
+                    pattern=os.path.expanduser(pattern),
+                    source=f"preset:{row['name']}",
+                    label=pattern,
+                )
+            )
+
+    exclude_if_present: list[str] = []
+    for line in (profile_row["exclude_if_present"] or "").splitlines():
+        stripped = line.strip()
+        if stripped.startswith("[x]"):
+            marker = stripped[3:].strip()
+            if marker:
+                exclude_if_present.append(marker)
+
+    return Profile(
+        profile_id=profile_row["id"],
+        name=profile_row["name"],
+        source_paths=[Path(row["dir"]).expanduser() for row in source_rows],
+        exclude_rules=exclude_rules,
+        exclude_if_present=exclude_if_present,
+    )
+
+
+def choose_source(profile: Profile, source: str | None) -> Path:
+    if source is None:
+        if len(profile.source_paths) == 1:
+            return profile.source_paths[0]
+        raise SystemExit("Profile has multiple sources. Pass --source to choose one.")
+
+    wanted = Path(source).expanduser().resolve()
+    for candidate in profile.source_paths:
+        if candidate.resolve() == wanted:
+            return candidate
+    raise SystemExit(f"Source {wanted} is not configured in profile {profile.name!r}.")
+
+
+def borg_pattern_prefix(pattern: str) -> str | None:
+    if len(pattern) > 2 and pattern[2] == ":" and pattern[:2].isalnum():
+        return pattern[:2]
+    return None
+
+
+def ncdu_exclude_path_for_profile(profile_name: str, explicit_output: str | None) -> Path:
+    if explicit_output:
+        return Path(explicit_output).expanduser()
+    slug = "".join(ch if ch.isalnum() or ch in ("-", "_") else "_" for ch in profile_name).strip("_") or "profile"
+    return DEFAULT_NCDU_EXCLUDES_DIR / f"{slug}.exclude"
+
+
+def translate_rule_for_ncdu(rule: ExcludeRule) -> str:
+    prefix = borg_pattern_prefix(rule.label)
+    if prefix is None:
+        return rule.label
+    if prefix == "fm":
+        return rule.label[3:]
+    raise SystemExit(
+        f"Cannot translate Borg pattern {rule.label!r} from {rule.source} to ncdu syntax."
+    )
+
+
+def write_ncdu_excludes(profile: Profile, output_path: Path) -> tuple[Path, list[str]]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    translated_patterns = list(
+        dict.fromkeys(translate_rule_for_ncdu(rule) for rule in profile.exclude_rules)
+    )
+    output_path.write_text("\n".join(translated_patterns) + "\n", encoding="utf-8")
+
+    unsupported_markers = [
+        marker for marker in profile.exclude_if_present if marker != "CACHEDIR.TAG"
+    ]
+    return output_path, unsupported_markers
+
+
+def cmd_sources(args: argparse.Namespace) -> int:
+    profile = load_profile(Path(args.db), args.profile)
+    print(f"Profile: {profile.name}")
+    print("Sources:")
+    for source in profile.source_paths:
+        print(f"  {source}")
+    print(f"Exclude rules: {len(profile.exclude_rules)}")
+    if profile.exclude_if_present:
+        print(f"Exclude-if-present: {', '.join(profile.exclude_if_present)}")
+    return 0
+
+
+def cmd_ncdu_excludes(args: argparse.Namespace) -> int:
+    profile = load_profile(Path(args.db), args.profile)
+    output_path, unsupported_markers = write_ncdu_excludes(
+        profile,
+        ncdu_exclude_path_for_profile(profile.name, args.output),
+    )
+
+    print(f"Profile:      {profile.name}")
+    print(f"Exclude file: {output_path}")
+    print(f"Rules:        {len(profile.exclude_rules)}")
+    if "CACHEDIR.TAG" in profile.exclude_if_present:
+        print("CACHEDIR.TAG: supported via ncdu --exclude-caches")
+    if unsupported_markers:
+        print(
+            "Warning:      ncdu cannot mirror these exclude-if-present markers: "
+            + ", ".join(unsupported_markers)
+        )
+    return 0
+
+
+def cmd_ncdu(args: argparse.Namespace) -> int:
+    profile = load_profile(Path(args.db), args.profile)
+    source = choose_source(profile, args.source)
+    output_path, unsupported_markers = write_ncdu_excludes(
+        profile,
+        ncdu_exclude_path_for_profile(profile.name, args.output),
+    )
+
+    if shutil.which("ncdu") is None:
+        raise SystemExit("ncdu is not installed or is not on PATH.")
+
+    cmd = ["ncdu", "-rr", "--apparent-size", "-X", str(output_path)]
+    if "CACHEDIR.TAG" in profile.exclude_if_present:
+        cmd.append("--exclude-caches")
+    cmd.append(str(source.resolve()))
+
+    if unsupported_markers:
+        print(
+            "Warning: ncdu cannot mirror these exclude-if-present markers: "
+            + ", ".join(unsupported_markers),
+            file=sys.stderr,
+        )
+    print(f"Using exclude file: {output_path}", file=sys.stderr)
+    print(f"Launching: {' '.join(cmd)}", file=sys.stderr)
+
+    completed = subprocess.run(cmd, check=False)
+    return completed.returncode
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Export Vorta excludes for ncdu and launch ncdu against a configured source."
+    )
+    parser.add_argument(
+        "--db",
+        default=str(DEFAULT_DB_PATH),
+        help=f"Path to Vorta settings DB (default: {DEFAULT_DB_PATH})",
+    )
+    parser.add_argument(
+        "--profile",
+        default="Default",
+        help="Vorta profile name to inspect",
+    )
+
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    p_sources = subparsers.add_parser("sources", help="Show configured sources for the profile")
+    p_sources.set_defaults(func=cmd_sources)
+
+    p_ncdu_excludes = subparsers.add_parser(
+        "ncdu-excludes",
+        help="Write an ncdu-compatible exclude file from the Vorta profile",
+    )
+    p_ncdu_excludes.add_argument(
+        "--output",
+        help="Where to write the exclude file "
+        f"(default: {DEFAULT_NCDU_EXCLUDES_DIR}/<profile>.exclude)",
+    )
+    p_ncdu_excludes.set_defaults(func=cmd_ncdu_excludes)
+
+    p_ncdu = subparsers.add_parser(
+        "ncdu",
+        help="Regenerate excludes and launch ncdu against a configured source",
+    )
+    p_ncdu.add_argument("--source", help="Source path from the Vorta profile")
+    p_ncdu.add_argument(
+        "--output",
+        help="Where to write the exclude file before launching ncdu",
+    )
+    p_ncdu.set_defaults(func=cmd_ncdu)
+
+    return parser
+
+
+def main() -> int:
+    parser = build_parser()
+    args = parser.parse_args()
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
