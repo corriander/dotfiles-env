@@ -51,6 +51,13 @@ Cross referencing between memories is fine! Personal notes and memory content ma
 
 Two graph layers exist — mempalace KG (structured claims) and Obsidian backlinks across `~/notes/`. Currently uncoordinated; search each in its own surface.
 
+## Parallel graphs
+
+Three graph layers exist, uncoordinated — search each in its own surface:
+- **mempalace KG** — structured claims (`kg_query` / `kg_add`).
+- **mempalace navigation graph** (3.3.6+) — hallways (entity co-occurrence *within* a wing) auto-promoting to tunnels (*across* wings), strengthened by Hebbian potentiation and faded by Ebbinghaus decay. Grown automatically at mine time, not hand-authored; traverse via `find_tunnels` / `follow_tunnels` / `traverse`.
+- **Obsidian backlinks** — across `~/notes/`, in `~/notes/.obsidian/` its own surface.
+
 ## Skills that touch persistence
 
 - `/recall` — load a prior session handoff (diary + linked drawers)

@@ -40,8 +40,8 @@ No need to explain the nature of destructive git actions, the user probably know
 ### 4. Write the diary entry
 
 Use `mempalace_diary_write` with:
-- `agent_name="claude"`
-- `wing="<project>"` — the project slug (e.g. `asm`). **Required for routing** — omit it and the entry lands in `wing_claude` which is for your own memories.
+- `agent_name="<claude, codex, etc>"`
+- `wing="<project>"` — the project slug (e.g. `asm`). **Required for routing** — omit it and the entry lands in `wing_claude` which is for claude's memories.
 - `topic` — finer-grained slug under the project (e.g. `admin-auth`).
 
 Defer to `/atlas` (and mempalace's own tools/docs it points to) for AAAK format and palace conventions.
