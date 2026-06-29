@@ -12,6 +12,9 @@ _zsh_vendor_cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/vendor-completions
 
 if [[ -L $_zsh_vendor_completions/_docker && ! -e $_zsh_vendor_completions/_docker ]]; then
     mkdir -p "$_zsh_vendor_cache"
+    for _completion in $_zsh_vendor_cache/*(N); do
+        [[ -L $_completion && ! -e $_completion ]] && rm -f -- "$_completion"
+    done
     for _completion in $_zsh_vendor_completions/*(N); do
         [[ -L $_completion && ! -e $_completion ]] && continue
         ln -sfn "$_completion" "$_zsh_vendor_cache/${_completion:t}"
