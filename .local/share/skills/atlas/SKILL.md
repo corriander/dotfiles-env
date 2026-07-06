@@ -37,7 +37,7 @@ Cross referencing between memories is fine! Personal notes and memory content ma
 - `mempalace_status` — protocol + AAAK dialect + palace counts
 - `mempalace_get_aaak_spec` — dialect detail
 - `mempalace_get_taxonomy` — live wing → room map
-- Upstream docs at `~/repos/3p/mempalace` for the canonical model (wings, rooms, halls, L0–L3 layers)
+- Upstream docs for the canonical model (wings, rooms, halls, L0–L3 layers): a repo checkout MAY exist at `~/repos/3p/mempalace` (machine-dependent — this skill is shared across machines; useful for pulling latest and inspecting history when present). The install itself is a uv tool: source of truth on any machine is `~/.local/share/uv/tools/mempalace/` (site-packages includes the README)
 
 ## Bespoke conventions (not in mempalace's docs)
 
