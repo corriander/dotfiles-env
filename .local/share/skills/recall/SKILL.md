@@ -53,6 +53,14 @@ Echo the recall in the same shape the manual loop produces:
 - Hygiene warnings — surface these out loud, don't bury them
 - Open threads / deferred items worth raising before resuming
 
+**Decompress, don't transcribe.** Diary entries are stored in a compressed AAAK-flavoured shorthand (pipe-chains, arrow-chains, abbreviations, dense noun-stacks). That is a storage format, not a presentation format — do not let it leak into the summary. The summary must read as natural prose to someone with no prior familiarity with the thread:
+- Complete sentences; no pipe-chains, arrow-chains, or headline-ese.
+- Expand every abbreviation, codename, or internal shorthand on first use — or drop it if it doesn't matter for resuming.
+- Refer to issues/PRs by number AND what they are about; a bare "#2543" means nothing to a cold reader.
+- Prefer meaning over mechanics: say what a decision implies for the work, not just its label.
+- Keep the citations (SHAs, PR/issue numbers, drawer IDs, file:line) — precision stays; density goes.
+- It is fine for the summary to use more words than the diary entry; readable beats short. Selectivity (dropping details that don't change what the reader does next) is how you keep it manageable, not compression.
+
 Then stop. Wait for the user to confirm the picture matches before doing any work from it.
 
 ## Principles

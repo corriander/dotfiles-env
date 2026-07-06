@@ -45,6 +45,7 @@ Cross referencing between memories is fine! Personal notes and memory content ma
 - **Rooms** — `gotchas` (noteworthy-but-not-docs-worthy quirks); `meta` (conventions about a wing itself; see "Recording new patterns" below).
 - **Drawers** — file generously, concept-sized: tool specs, decisions, design rationales all belong. Not sentence-sized.
 - **Diary** — entries reference drawer IDs rather than duplicating their prose.
+- **AAAK is a storage dialect, not a presentation style** — whenever surfacing diary/drawer content to the user (recall, search results, quotes), decompress into plain prose; never echo the shorthand.
 - **Layers L0/L1** — unused; placeholder for future-us if cross-session identity ever becomes a real gap.
 
 ## Parallel graphs
