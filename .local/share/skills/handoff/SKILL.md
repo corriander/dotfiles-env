@@ -39,10 +39,13 @@ No need to explain the nature of destructive git actions, the user probably know
 
 ### 4. Write the diary entry
 
-Use `mempalace_diary_write` with:
+Use `mempalace_diary_write`. Its schema varies by mempalace version — **the live MCP tool schema in-session is authoritative over this text** (silent arg-drop means a wrong param name fails opaquely, not loudly):
 - `agent_name="<claude, codex, etc>"`
-- `wing="<project>"` — the project slug (e.g. `asm`). **Required for routing** — omit it and the entry lands in `wing_claude` which is for claude's memories.
-- `topic` — finer-grained slug under the project (e.g. `admin-auth`).
+- `entry` — the handoff body (see below). The body param is `entry`, NOT `content`. On mempalace ≤3.3.x, `content=` is silently dropped (MCP dispatch filters unknown arg names) → required `entry` missing → opaque `-32000 "Internal tool error"`. 3.4.0+ accepts `content` as an alias, but `entry` works on every version — always use it.
+- `topic` — the fine-grained slug (e.g. `qa-format-debt-gate`).
+- `wing="<project>"` — **3.4.0+ only**. Routes the entry to the project wing (e.g. `asm`); omitted, it lands in `wing_<agent_name>`. Pass it when the live schema shows it. On ≤3.3.x there is no `wing` param (it would be silently dropped): name the project in the `topic` and/or lead the `entry` with it (e.g. `SESSION:<date>|<project>|...`) for findability, and put project-routed canon in a drawer (step 5), which takes `wing` on all versions.
+
+(Silent-arg-drop dispatch behaviour and other API gotchas: `tools/mempalace` drawers.)
 
 Defer to `/atlas` (and mempalace's own tools/docs it points to) for AAAK format and palace conventions.
 

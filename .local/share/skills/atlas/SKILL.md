@@ -42,6 +42,7 @@ Cross referencing between memories is fine! Personal notes and memory content ma
 ## Bespoke conventions (not in mempalace's docs)
 
 - **Wings** — bare `<project>` for our own (canonical form is `wing_<thing>`).
+- **Third-party tool canon** — `wing=tools`, one room per tool (`tools/mempalace`, `tools/cyclopts`, …). Do NOT create a bare wing for a 3p tool (a stray `mempalace/gotchas` wing was reconciled into `tools/mempalace` and retired, 2026-07-06).
 - **Rooms** — `gotchas` (noteworthy-but-not-docs-worthy quirks); `meta` (conventions about a wing itself; see "Recording new patterns" below).
 - **Drawers** — file generously, concept-sized: tool specs, decisions, design rationales all belong. Not sentence-sized.
 - **Diary** — entries reference drawer IDs rather than duplicating their prose.
