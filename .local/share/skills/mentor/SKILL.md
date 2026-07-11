@@ -3,7 +3,20 @@ name: mentor
 description: Cross-model working-method practice — ground work in constraint sources before acting, and file signed method observations to mempalace meta/mentor. Reference at session start, when told to "take mentor notes", or whenever a method choice materially changes an outcome.
 ---
 
-We are building a bank of skills to lift less-capable models toward stronger working behaviour, ahead of an explicit capability/cost hierarchy (e.g. Fable → Opus → Sonnet → local). Currently in the take-notes phase: observations accrue in mempalace `wing=meta, room=mentor`; skills are distilled from them later. This skill has two duties, both lightweight.
+We are building a bank of skills to lift less-capable models toward stronger working behaviour, ahead of an explicit capability/cost hierarchy (e.g. Fable → Opus → Sonnet → local). Currently in the take-notes phase: observations accrue in mempalace `wing=meta, room=mentor`; skills are distilled from them later. The purpose section below frames the practice; the skill then has three duties, all lightweight.
+
+## Purpose, and how the tiers relate
+
+The roster is a capability hierarchy — **frontier → capable mid-tier → local small models** (as of 2026-07: Fable → Opus/Sonnet → ~24–31B OSS) — and work defers down it for more than one reason. **Cost** is the loudest (frontier use is metered and must be highly targeted), but **privacy/data-sensitivity** independently forces work below the frontier→OSS boundary — some data shouldn't leave the estate regardless of budget. Whatever the driver, the consequence is the same: frontier models act as **teacher/orchestrator**, not everyday worker, and lower tiers must run the method well without one watching. The tier gap is mostly sustained reasoning **depth** — the length of chain a model will sustain — not raw IQ. Depth expressed as *method* transfers where the depth itself doesn't.
+
+Lessons flow down by **re-expression, not broadcast**: each hop restates a lesson at the receiving tier's executable altitude — converting judgement into narrower mechanical proxies where one exists, dropping what has none. A lesson applied below its `[judgement: …]` floor doesn't just fail — it **misfires** as confident-wrong behaviour. Feedback flows **up**: lower tiers register *where a narrowed method broke*; the orchestrator observes and files that telemetry on their behalf.
+
+Which mode are you in?
+- **Frontier (teacher/distiller):** author notes; distill high-score notes into skills; onboard upward failure-telemetry; shape lower-tier skill forms.
+- **Capable mid-tier:** author notes for peers; help re-express method for the tier below; feed your own method-failures upward.
+- **Lower tier:** usually *orchestrated* — attempt the method, surface where it breaks; the orchestrator captures it.
+
+Full economics and cascade theory live in the charter and context drawers in `meta/mentor` — read there, don't re-derive here.
 
 ## 1. Work grounded (always, every task)
 
@@ -24,7 +37,9 @@ While working:
 
 When you notice a method choice **materially changed the outcome** — caught an error, avoided a dead end, resolved ambiguity, prevented a regression — file it to mempalace with `add_drawer`, `wing=meta`, `room=mentor`, and pass your model id as `added_by`.
 
+- **What earns a note — two archetypes.** (a) A *single sharp method rule* that materially changed the outcome. (b) A *worked approach-rubric on an open task*: the ordered method narrative (what you grounded in, what you measured, what you read, which forks you surfaced) plus an honest account of where corrections came in — the **how**, not the conclusion. Anti-pattern: a content insight is **not** a method note — its home is the decision drawer; the method that *produced* it may be one. Don't manufacture a post-hoc "rule" from a good outcome and mistake articulation for transferable method.
 - Read the charter drawer in `meta/mentor` before your first write of a session.
+- **Lead every note with a one-line header**: `NOTE (<archetype>) — <topic> — by <model id> — outcome <n/5 | pending>`. The store chunks long drawers and the signature/score land in the final chunk; the header keeps both distillation signals visible in list previews. It supplements the signature and outcome lines below — never replaces them.
 - Entry shape: **Situation → Method → Why it mattered → Distillable rule**. Phrase rules so a smaller model can follow them mechanically *where possible*. Where a lesson is genuinely judgement-shaped and resists mechanisation, don't force it — force-mechanised judgement gets misapplied by models that can't exercise the judgement, which is its own poisoning. Instead tag the rule's floor: `[judgement: <tier>-and-up]`. Untagged rules are assumed mechanical (transfer to any tier).
 - When a note surfaces a guidance gap (missing spec, inconsistent corpus, stale instruction), record it as a `GAP:` line in the note — do **not** spawn a fix task for it. A fix effort spawns only when the same gap recurs across ≥2 notes, or Alex greenlights it fresh. The bank tells us which gaps keep costing.
 - End every entry with a signature line: `— signed: <your exact model id> (<date>)`. The signature is **load-bearing** — entries are weighted by the capability tier that wrote them. Never omit or approximate it. Corrections and failure observations are as valuable as successes; sign those too.
