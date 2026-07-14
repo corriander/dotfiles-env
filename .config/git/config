@@ -33,7 +33,7 @@
 
     # incubation/trial
     ls-branch = !git --no-pager diff --name-status "$(git merge-base HEAD main)" HEAD
-
+    
     # rarely used
     co = commit
     ci = commit
@@ -49,6 +49,15 @@
     rewind-files = reset --hard HEAD^1
     wdiff = diff --color-words
     addnw=!sh -c 'git diff -U0 -w --no-color --src-prefix=a/ --dst-prefix=b/ "$@" | git apply --cached --ignore-whitespace --unidiff-zero -'
+	ch = checkout
+	po = push
+	pu = push
+	pd = pull
+	spop = stash pop
+	sa = stash apply
+	sw = stash save
+    stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
+              do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f"
 [color]
     diff = auto
     status = auto
@@ -71,3 +80,9 @@
 	path = git-xet
 	args = transfer
 	concurrent = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential

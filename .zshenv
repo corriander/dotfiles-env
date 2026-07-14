@@ -27,3 +27,5 @@ case "$OSTYPE" in
     platform=unknown
     ;;
 esac
+
+alias assume=". assume"

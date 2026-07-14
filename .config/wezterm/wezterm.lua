@@ -37,7 +37,7 @@ config.color_scheme = 'Monokai Dark (Gogh)'
 
 
 
-config.window_background_opacity = 0.90
+config.window_background_opacity = 0.85
 
 config.font = wezterm.font 'FiraCode NF'
 

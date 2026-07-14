@@ -4,6 +4,16 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# TODO: Figure out how to include this in a modular way.
+# 
+# The ~/.config/profile dir presents a chicken and egg situation where this 
+# isn't sourced on non-macos. I'm not sure I want it to be. But the platform 
+# detection bits only come in with `common`. Maybe incorporate this profile?
+if [ -f /etc/profile ]; then
+    PATH=""
+    source /etc/profile
+fi
+
 # Source profile customisations early so all paths are present etc.
 . ~/.config/profile/common.sh
 
@@ -96,6 +106,7 @@ plugins=(
     tmuxinator
     gitignore
     nvm
+    zoxide
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -150,12 +161,23 @@ SPACESHIP_TIME_FORMAT='[%D{%H:%M}]'
 SPACESHIP_DIR_PREFIX=''
 
 # pnpm
-export PNPM_HOME="/home/alex/.local/share/pnpm"
+export PNPM_HOME="/Users/alex/Library/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 #
 
+
 [ -z "$ZPROF" ] || zprof
+
+# bun completions
+[ -s "/Users/alex/.bun/_bun" ] && source "/Users/alex/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# sentry
+fpath=("/Users/alex/.local/share/zsh/site-functions" $fpath)

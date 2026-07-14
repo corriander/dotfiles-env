@@ -49,6 +49,7 @@ nv() {
 }
 
 alias uvr='uv run --frozen'
+alias prt='poetry run tests'
 
 case $HOSTNAME in
 	$HOST_DESKTOP )

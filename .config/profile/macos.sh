@@ -8,6 +8,9 @@ add_to_path $(brew --prefix)/opt/gnu-getopt/bin
 export NVIM_PATH=/opt/homebrew/bin/nvim
 export EDITOR=$NVIM_PATH
 
+
+export KOBOLD_BASE_URL=http://phobos:5001
+
 # --------------------------------------------------------------------------------
 # Platform-specific aliases
 # --------------------------------------------------------------------------------

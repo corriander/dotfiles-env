@@ -1,12 +1,19 @@
 . $FUNCPATH/rename_function.zsh
 . $FUNCPATH/fzf1.sh
 
-CONDA_ROOT="$HOME/app/miniforge"
+CONDA_ROOT="$HOME/app/mambaforge"
 
 # If conda is not installed, skip the rest of the script
 if [ ! -f "$CONDA_ROOT/bin/conda" ]; then
     return
 fi
+
+# -----------------------------------------------------------------------------
+# PATH vars
+# -----------------------------------------------------------------------------
+#export CONDAWRAPPER_PROJECTS=~/repos
+export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
+add_to_path $HOME/app/mambaforge/bin  # we always want conda/mamba in the path
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

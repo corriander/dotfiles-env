@@ -27,3 +27,10 @@ add_to_path () {
         fi
     fi
 }
+
+
+debug_path () {
+    echo "--- debug path ---"
+    echo ${PATH//:/'\n'}
+    echo "--- end debug --- "
+}

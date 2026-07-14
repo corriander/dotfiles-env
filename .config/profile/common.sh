@@ -19,6 +19,11 @@ __hostname=$(hostname) # we will override this in some configs to disambiguate
 #   Generic PATH settings
 #
 # ------------------------------------------------------------------
+export XDG_CONFIG_HOME=~/.config
+export XDG_DATA_HOME=~/.local/share
+export XDG_CACHE_HOME=~/.cache
+export XDG_STATE_HOME=~/.local/state
+
 add_to_path ${HOME}/.bin                        # my bin
 add_to_path ${HOME}/.local/bin                  # bin (inc. overrides)
 add_to_path ${HOME}/.scripts                    # scripts
@@ -28,6 +33,8 @@ add_to_path ${HOME}/.scripts/3rd-party          # 3rd party scripts
 
 # Source platform-specific profile config
 # platform=$(detect_platform)  # set in .zshenv now
+
+
 
 . ${HOME}/.config/profile/${platform}.sh
 . ${HOME}/.config/profile/${platform}.$(detect_shell)
@@ -62,8 +69,6 @@ done
 # -----------------------------------------------------------------
 # Python / conda / mamba
 export JUPYTER_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/jupyter
-export CONDAWRAPPER_PROJECTS=~/repos
-export CONDARC=${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc
 
 # R, LaTeX see old .profile
 
