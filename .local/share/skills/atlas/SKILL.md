@@ -18,7 +18,7 @@ Where durable information tends to live, and how to access it.
 
 One machine, two environments. WSL is the source of truth; Windows agents (Claude Desktop, Codex, Claude Code) attach to it. Paths above are WSL; equivalents:
 
-- **MemPalace** — *one shared store*. WSL launches it stdio from `~/.mempalace`; Windows agents spawn the *same* binary against the *same* store via `wsl.exe` (`-d ubuntu-25.10 -e … -m mempalace.mcp_server`). Host-agnostic — `/handoff` and `/recall` behave identically either side.
+- **MemPalace** — *one shared store*. WSL launches it stdio from `~/.mempalace`; Windows agents spawn the *same* binary against the *same* store via `wsl.exe` (`-d ubuntu -e … -m mempalace.mcp_server`; the `ubuntu-25.10` distro is inactive, awaiting archival). Host-agnostic — `/handoff` and `/recall` behave identically either side.
 - **Personal notes** — *one vault*. `~/notes` is a symlink resolving to `C:\Users\alexj\notes`, so WSL and Windows see the same Obsidian vault.
 - **Skills** — `~/.local/share/skills` is canonical; `sync.sh` symlinks them on WSL and copies them into the Windows `…\.{claude,codex}\skills` dirs (one-way; re-run after edits).
 - **Auto-memory** — *separate per host*: `~/.claude/projects/<p>/memory/` (WSL) vs `C:\Users\alexj\.claude\projects\<p>\memory\` (Windows). Not unified.
@@ -29,6 +29,13 @@ One machine, two environments. WSL is the source of truth; Windows agents (Claud
 Only docs committed to repo (general, CONTEXT.md or ADRs) are referencable in docstrings, comments, PRs, Issues, Slack etc.
 ADRs may be referenced in docstrings, other documentation should not be - assume the code is authoritative.
 Personal notes and memory are ephemeral and generally considered not referencable.
+
+- **Public repository publication** — before drafting or publishing issues,
+  pull requests, roadmaps, release notes, contribution guidance, or other
+  outward-facing material, consult `public-repo-publishing`. Private notes may
+  hold the richer shaping corpus, but public artifacts must be curated,
+  self-contained, and free of references to inaccessible stores or private
+  implementation details.
 
 Cross referencing between memories is fine! Personal notes and memory content may *inform* other content but take care with verbatim quotes.
 
@@ -52,10 +59,6 @@ Cross referencing between memories is fine! Personal notes and memory content ma
 
 ## Parallel graphs
 
-Two graph layers exist — mempalace KG (structured claims) and Obsidian backlinks across `~/notes/`. Currently uncoordinated; search each in its own surface.
-
-## Parallel graphs
-
 Three graph layers exist, uncoordinated — search each in its own surface:
 - **mempalace KG** — structured claims (`kg_query` / `kg_add`).
 - **mempalace navigation graph** (3.3.6+) — hallways (entity co-occurrence *within* a wing) auto-promoting to tunnels (*across* wings), strengthened by Hebbian potentiation and faded by Ebbinghaus decay. Grown automatically at mine time, not hand-authored; traverse via `find_tunnels` / `follow_tunnels` / `traverse`.
@@ -66,6 +69,9 @@ Three graph layers exist, uncoordinated — search each in its own surface:
 - `/recall` — load a prior session handoff (diary + linked drawers)
 - `/handoff` — write a session handoff; promote durable bits to drawers
 - `notes-authoring-agent` — `~/notes/`, on request only
+- `public-repo-publishing` — curate private planning into intentionally
+  published, self-contained public-repository artifacts; publication always
+  requires explicit user authority.
 - Auto-memory writes — e.g. per `~/.claude/CLAUDE.md`
 
 ## Recording new patterns
