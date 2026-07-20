@@ -1,4 +1,11 @@
 git-wt() {
+  case "${1:-}" in
+    -h|--help|help)
+      command git-wt "$@"
+      return
+      ;;
+  esac
+
   local target
   target="$(command git-wt "$@")" || return 1
   [ -n "$target" ] || return 0
@@ -6,7 +13,29 @@ git-wt() {
 }
 
 git-wt-clean() {
-  command git-wt clean "$@"
+  local -a prefix rest
+  prefix=()
+  rest=()
+
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --root)
+        prefix+=("$1")
+        shift
+        [ "$#" -gt 0 ] || {
+          command git-wt --root
+          return
+        }
+        prefix+=("$1")
+        ;;
+      *)
+        rest+=("$1")
+        ;;
+    esac
+    shift
+  done
+
+  command git-wt "${prefix[@]}" clean "${rest[@]}"
 }
 
 _git_wt_branch_names() {
@@ -24,7 +53,18 @@ _git_wt_worktree_names() {
 _git_wt() {
   local -a branches
   branches=(${(f)"$(_git_wt_branch_names)"})
-  _describe -t branches 'branch' branches
+
+  _arguments -C \
+    '--root[repo root to operate from]:repo:_directories' \
+    '--base[base ref for new branch]:base ref:->branch' \
+    '--from[base ref for new branch]:base ref:->branch' \
+    '1:branch:->branch'
+
+  case "$state" in
+    branch)
+      _describe -t branches 'branch' branches
+      ;;
+  esac
 }
 
 _git_wt_clean() {

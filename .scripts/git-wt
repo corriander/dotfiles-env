@@ -5,8 +5,8 @@ set -eu
 usage() {
   cat <<'EOF'
 usage:
-  git-wt <branch>
-  git-wt clean [-f|--force] <branch> [--delete-branch]
+  git-wt [--root <repo>] [--base <ref>] <branch>
+  git-wt [--root <repo>] clean [-f|--force] <branch> [--delete-branch]
 
 Creates or reuses a worktree for <branch> and prints its path.
 `clean` removes the matching worktree and can optionally delete the branch.
@@ -20,6 +20,14 @@ die() {
 
 git_root() {
   git rev-parse --show-toplevel 2>/dev/null || die "not inside a git repository"
+}
+
+git_root_from() {
+  if [ -n "${1:-}" ]; then
+    git -C "$1" rev-parse --show-toplevel 2>/dev/null || die "invalid repository: $1"
+  else
+    git_root
+  fi
 }
 
 safe_branch_name() {
@@ -85,8 +93,9 @@ resolve_worktree_path() {
 }
 
 ensure_branch_worktree() {
-  branch="$1"
-  root="$(git_root)"
+  root="$1"
+  branch="$2"
+  base="${3:-}"
   wt_dir="$(resolve_worktree_path "$root" "$branch")"
 
   existing="$(branch_worktree_path "$root" "$branch")"
@@ -100,6 +109,8 @@ ensure_branch_worktree() {
 
   if git -C "$root" show-ref --verify --quiet "refs/heads/$branch"; then
     git -C "$root" worktree add --quiet "$wt_dir" "$branch"
+  elif [ -n "$base" ]; then
+    git -C "$root" worktree add --quiet "$wt_dir" -b "$branch" "$base"
   else
     git -C "$root" worktree add --quiet "$wt_dir" -b "$branch"
   fi
@@ -108,6 +119,8 @@ ensure_branch_worktree() {
 }
 
 clean_branch_worktree() {
+  root="$1"
+  shift
   branch=""
   delete_branch=0
   force=0
@@ -139,7 +152,6 @@ clean_branch_worktree() {
 
   [ -n "$branch" ] || die "usage: git-wt clean [-f|--force] <branch> [--delete-branch]"
 
-  root="$(git_root)"
   wt_dir="$(resolve_worktree_path "$root" "$branch")"
 
   if [ -d "$wt_dir" ]; then
@@ -173,17 +185,53 @@ main() {
     exit 1
   }
 
+  root_arg=""
+  base=""
+
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --root)
+        shift
+        [ "$#" -gt 0 ] || die "--root requires a path"
+        root_arg="$1"
+        ;;
+      --base|--from)
+        shift
+        [ "$#" -gt 0 ] || die "--base requires a ref"
+        base="$1"
+        ;;
+      --)
+        shift
+        break
+        ;;
+      -*)
+        break
+        ;;
+      *)
+        break
+        ;;
+    esac
+    shift
+  done
+
+  [ "$#" -gt 0 ] || {
+    usage
+    exit 1
+  }
+
+  root="$(git_root_from "$root_arg")"
+
   case "$1" in
     -h|--help)
       usage
       ;;
     clean)
       shift
-      clean_branch_worktree "$@"
+      clean_branch_worktree "$root" "$@"
       ;;
     *)
-      [ "$#" -eq 1 ] || die "usage: git-wt <branch>"
-      ensure_branch_worktree "$1"
+      [ "$#" -eq 1 ] || die "usage: git-wt [--root <repo>] [--base <ref>] <branch>"
+      ensure_branch_worktree "$root" "$1" "$base"
       ;;
   esac
 }

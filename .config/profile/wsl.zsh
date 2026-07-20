@@ -72,3 +72,9 @@ assume () {
 
     return 0
 }
+
+eval "$(zoxide init zsh)"
+
+
+eval "$(dircolors -b ~/.dircolors)"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}

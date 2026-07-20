@@ -45,34 +45,31 @@ root: ~/.config
 # attach: false
 
 windows:
-  - env-config:
-      layout: tiled
+  - env:
+      layout: ef17,415x86,0,0{307x86,0,0,1,107x86,308,0[107x43,308,0,5,107x42,308,44,6]}
       root: ~
       panes:
-        - dotfiles-repo:
+        - editor: 
             - vcsh enter env
-        - main: 
             - cd ~/.config
             - nvim .
-        - functions:
-            - cd ~/.functions
-            - nvim .
-        - scripts:
-            - cd ~/.scripts
-            - nvim .
+        - shell: 
+        - dotfiles-repo:
+            - vcsh enter env
 
-  - editor-config:
-      layout: main-vertical
-      # Synchronize all panes of this window, can be enabled before or after the pane commands run.
-      # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
-      # synchronize: after
+  - editor:
+      layout: ef17,415x86,0,0{307x86,0,0,1,107x86,308,0[107x43,308,0,5,107x42,308,44,6]}
       root: ~/.config/nvim
       panes:
-        - nvim .
-        - vcsh enter editors
+        - editor:
+            - vcsh enter editors
+            - nvim .
+        - shell: 
+        - editors-repo:
+            - vcsh enter editors
 
   - bootstrap:
-      layout: 47af,272x83,0,0{157x83,0,0,0,114x83,158,0[114x41,158,0,4,114x41,158,42,5]}
+      layout: ef17,415x86,0,0{307x86,0,0,1,107x86,308,0[107x43,308,0,5,107x42,308,44,6]}
       root: ~/repos/system-bootstrap
       panes:
         - editor: nvim .

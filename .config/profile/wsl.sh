@@ -4,6 +4,9 @@
 # allow passphrase prompts when caching credentials.
 export GPG_TTY=$(tty)
 
+# See bootstrap-private repo for more details on how this is setup
+export SSH_AUTH_SOCK="$HOME/.local/state/1password/agent.sock"
+
 # -----------------------------------------------------------------------------
 # PATH
 # -----------------------------------------------------------------------------

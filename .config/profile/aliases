@@ -10,6 +10,10 @@ alias cpi='cp -iv'
 alias lsd='ls -d */'
 alias tree-plain='tree -FanI .git --charset=IBM347'
 
+# For full netrw hijack a la telescope file browser:
+# https://github.com/nvim-telescope/telescope.nvim/issues/2806#issuecomment-1904877188
+alias vf='nvim +"Telescope find_files" .'
+
 # Navigation
 
 alias cdconf='cd ${XDG_CONFIG_HOME:-$HOME/.config}'
@@ -39,6 +43,9 @@ alias colout='colout -T $HOME/.config/colours'
 # disable in favour of zsh plugin managing tmux (config location settable)
 # reinstate if plugin not used
 #alias tmux='tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf'
+alias prt='poetry run tests'
+
+uvr="uv run"
 
 nv() {
 	if [[ $# -eq 0 ]]; then
@@ -69,3 +76,4 @@ case $HOSTNAME in
 esac
 
 # **NOTE** Platform-specific aliases are in the associated ${platform}.sh
+

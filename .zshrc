@@ -1,5 +1,19 @@
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 # Use `ZPROF=1 zsh -i -c exit` to profile startup times
+#
+if [[ -n "$TRACE_PATH_CHANGES" ]]; then
+    typeset -g __last_path="$PATH"
+    TRAPDEBUG() {
+      if [[ "$PATH" != "$__last_path" ]]; then
+        print -ru2 -- "PATH changed before: ${funcfiletrace[1]:-top-level}"
+        print -ru2 -- "OLD=$__last_path"
+        print -ru2 -- "NEW=$PATH"
+        print -ru2 -- ""
+        __last_path="$PATH"
+      fi
+    }
+fi
+
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -159,3 +173,6 @@ esac
 #
 
 [ -z "$ZPROF" ] || zprof
+
+# opencode
+export PATH=/home/alex/.opencode/bin:$PATH
