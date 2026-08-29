@@ -45,8 +45,6 @@ alias colout='colout -T $HOME/.config/colours'
 #alias tmux='tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf'
 alias prt='poetry run tests'
 
-uvr="uv run"
-
 nv() {
 	if [[ $# -eq 0 ]]; then
 		$NVIM_PATH .
@@ -56,6 +54,8 @@ nv() {
 }
 
 alias uvr='uv run --frozen'
+
+alias bat=batcat
 
 case $HOSTNAME in
 	$HOST_DESKTOP )
