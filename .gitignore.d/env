@@ -80,6 +80,8 @@
 !.local/share/vcsh/doc/env/README.md
 !.scripts
 !.scripts/*
+
+# NOTE: These are explicitly tracked by other vcsh repos; we can't claim them here.
 .scripts/mr*
 .scripts/vials
 !.scripts/*/
