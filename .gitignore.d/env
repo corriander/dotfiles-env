@@ -43,6 +43,9 @@
 .config/wezterm/*acds*
 !.config/starship.toml
 
+!.config/chumak
+!.config/chumak/**
+
 !.functions
 !.functions/*
 !.functions/unittests

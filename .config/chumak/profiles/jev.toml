@@ -1,0 +1,13 @@
+# Estate-shared Jev profile. Apps ask for "jev"; which model that means is decided here (and may be overridden by the app's own profile).
+# The API key is NOT set here: each app supplies it through its own env var,
+#   {APP_PREFIX}_PROFILE_JEV_MODEL_KWARGS__API_KEY
+# declared in that app's .env.schema -> op://Integrations/jev/credential
+handler = "systemone"
+model = "jev-latest"
+description = "TypeSafe System One (Jev); experimental decision model"
+
+# Optional handler settings. Uncomment to override the handler's defaults.
+# [model_kwargs]
+# timeout = 30             # seconds (goes here, not top-level: `timeout` is subprocess-only)
+# noul_threshold = 0.5     # probability cut-off for bool answers
+# retry = { max_retries = 5, backoff_max = 10.0 }
