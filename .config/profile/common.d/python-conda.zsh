@@ -2,6 +2,7 @@
 . $FUNCPATH/fzf1.sh
 
 CONDA_ROOT="$HOME/app/miniforge"
+export MAMBA_ROOT_PREFIX="$CONDA_ROOT"
 
 # If conda is not installed, skip the rest of the script
 if [ ! -f "$CONDA_ROOT/bin/conda" ]; then
