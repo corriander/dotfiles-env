@@ -55,7 +55,8 @@ nv() {
 
 alias uvr='uv run --frozen'
 
-alias bat=batcat
+# only alias bat to batcat if batcat is installed (Debian/Ubuntu)
+command -v batcat >/dev/null && alias bat=batcat
 
 case $HOSTNAME in
 	$HOST_DESKTOP )
