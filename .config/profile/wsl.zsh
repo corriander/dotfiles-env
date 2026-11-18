@@ -24,8 +24,6 @@ fi
 
 unset _completion _zsh_vendor_cache _zsh_vendor_completions
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 __configure_aws_codeartifact () {
     # requires poetry-source-env plugin
     #domain_owner=$(aws sts get-caller-identity --query "Account" --output text)
